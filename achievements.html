@@ -3,35 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Browse all detective cases - from quick whodunits to complex investigations. Choose your difficulty and start solving.">
-  <title>Cases - AI Detective</title>
+  <meta name="description" content="AI Detective - Achievements. Earn exclusive badges as you sharpen your detective skills.">
+  <title>Achievements | AI Detective</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="no-scroll">
 
-  <!-- Fingerprint Loading Screen -->
   <div class="fp-loader">
     <div class="fp-wrap">
-      <div class="fp-icon">🔍<div class="fp-scan"></div></div>
+      <div class="fp-icon">🔍
+        <div class="fp-scan"></div>
+      </div>
       <div class="fp-text">Scanning credentials...</div>
-      <div class="fp-bar"><div class="fp-bar-fill"></div></div>
+      <div class="fp-bar">
+        <div class="fp-bar-fill"></div>
+      </div>
       <div class="fp-percent">0%</div>
     </div>
   </div>
-  <!-- Legacy fallback loader -->
-  <div class="loader">
-    <div class="loader-spinner"></div>
-    <div class="loader-text">Loading AI Detective...</div>
-  </div>
 
-  <!-- Particle Background -->
   <div class="particles"></div>
 
-  <!-- Custom Cursor -->
   <div class="cursor"></div>
   <div class="cursor-follower"></div>
 
-  <!-- Navbar -->
   <nav class="navbar">
     <div class="nav-container">
       <a href="index.html" class="nav-logo">
@@ -43,7 +38,7 @@
         <li><a href="cases.html">Cases</a></li>
         <li><a href="game.html">Game</a></li>
         <li><a href="leaderboard.html">Leaderboard</a></li>
-        <li><a href="achievements.html">Achievements</a></li>
+        <li><a href="achievements.html" class="active">🏅 Achievements</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
@@ -52,7 +47,7 @@
         <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme">
           <span data-theme-icon>☀️</span>
         </button>
-        <a href="game.html" class="nav-cta">🎮 Play Now</a>
+        <a href="cases.html" class="nav-cta">🎮 Play Now</a>
         <button class="nav-toggle" aria-label="Menu">
           <span></span>
           <span></span>
@@ -62,7 +57,6 @@
     </div>
   </nav>
 
-  <!-- Mobile Menu -->
   <div class="mobile-overlay"></div>
   <div class="mobile-menu">
     <ul>
@@ -77,57 +71,40 @@
     </ul>
   </div>
 
-  <!-- Main -->
   <main>
 
-    <!-- Page Header -->
-    <section class="page-header">
+    <section class="hero">
       <div class="container">
-        <div class="breadcrumb reveal">
-          <a href="index.html">Home</a>
-          <span class="breadcrumb-sep">/</span>
-          <span>Cases</span>
-        </div>
-        <h1 class="page-title reveal">Browse the <span>Case Files</span></h1>
-        <p class="page-subtitle reveal">Six unique mysteries await. Filter by difficulty, read the brief, and begin your investigation when ready.</p>
+        <h1 style="font-size:clamp(32px,5vw,56px); margin-bottom:12px;">🏅 Achievements</h1>
+        <p class="hero-desc reveal">Earn exclusive badges as you sharpen your detective skills. Every case solved unlocks new challenges and rewards.</p>
       </div>
     </section>
 
-    <!-- Filters -->
-    <section class="section" style="padding-top: 20px;">
+    <section class="section" style="padding: 40px 0 10px;">
       <div class="container">
-        <div class="cases-filters reveal">
-          <button class="filter-btn active" data-filter="all">🗂️ All Cases</button>
-          <button class="filter-btn" data-filter="easy">🟢 Easy</button>
-          <button class="filter-btn" data-filter="medium">🟡 Medium</button>
-          <button class="filter-btn" data-filter="hard">🔴 Hard</button>
-        </div>
-
-        <!-- Cases Grid -->
-        <div class="cases-grid" data-cases-grid>
-          <!-- Cases rendered by JS -->
-        </div>
-
-        <!-- Stats -->
-        <div class="text-center mt-8 reveal">
-          <div class="hero-stats" style="max-width: 700px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
-            <div class="hero-stat">
-              <div class="hero-stat-number" data-counter="6" data-suffix="">0</div>
-              <div class="hero-stat-label">Available Cases</div>
-            </div>
-            <div class="hero-stat">
-              <div class="hero-stat-number" data-counter="2" data-suffix="">0</div>
-              <div class="hero-stat-label">Easy Cases</div>
-            </div>
-            <div class="hero-stat">
-              <div class="hero-stat-number" data-counter="2" data-suffix="">0</div>
-              <div class="hero-stat-label">Hard Cases</div>
-            </div>
-          </div>
-        </div>
+        <div data-profile-card></div>
       </div>
     </section>
-    <section class="section" style="padding:30px 0 10px;"><div class="container" style="display:grid;grid-template-columns: 1fr 1fr;gap:24px;"><div data-profile-card></div><div data-daily-challenge></div></div></section>
+
+    <section class="section" style="padding: 20px 0;">
+      <div class="container">
+        <div data-achievements-summary></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="ach-grid" data-achievements-grid></div>
+      </div>
+    </section>
+
+    <section class="section" style="padding: 40px 0;">
+      <div class="container">
+        <h2 style="font-size: clamp(26px,4vw,40px); margin-bottom:10px;">📜 Evidence Timeline Example</h2>
+        <p class="hero-desc">Below is how an evidence timeline appears inside each case. Hover to see the connecting lines.<br><br></p>
+        <div data-timeline></div>
+      </div>
+    </section>
 
   </main>
 
@@ -143,37 +120,46 @@
           <span class="settings-icon">🔊</span>
           <span>
             <div class="settings-label">Enable Sound</div>
-            <small class="settings-hint">Plays subtle beeps on clicks &amp; events</small>
+            <small class="settings-hint">Plays subtle beeps on clicks & events</small>
           </span>
         </div>
-        <label class="switch"><input type="checkbox" data-pref="sound"><span class="slider"></span></label>
+        <label class="switch">
+          <input type="checkbox" data-pref="sound">
+          <span class="slider"></span>
+        </label>
       </div>
       <div class="settings-row">
         <div class="settings-info">
           <span class="settings-icon">✨</span>
           <span>
             <div class="settings-label">Enable Animations</div>
-            <small class="settings-hint">Fades, reveals &amp; hover effects</small>
+            <small class="settings-hint">Fades, reveals & hover effects</small>
           </span>
         </div>
-        <label class="switch"><input type="checkbox" data-pref="animations" checked><span class="slider"></span></label>
+        <label class="switch">
+          <input type="checkbox" data-pref="animations" checked>
+          <span class="slider"></span>
+        </label>
       </div>
       <div class="settings-row">
         <div class="settings-info">
           <span class="settings-icon">🎨</span>
           <span>
             <div class="settings-label">Dark Theme</div>
-            <small class="settings-hint">Switch between dark &amp; light mode</small>
+            <small class="settings-hint">Switch between dark & light mode</small>
           </span>
         </div>
-        <label class="switch"><input type="checkbox" data-pref="theme" checked><span class="slider"></span></label>
+        <label class="switch">
+          <input type="checkbox" data-pref="theme" checked>
+          <span class="slider"></span>
+        </label>
       </div>
     </div>
     <div class="settings-footer">
       <small>Build <span data-app-version>v2.0.0</span></small>
     </div>
   </aside>
-  <!-- Footer -->
+
   <footer class="footer">
     <div class="container">
       <div class="footer-grid">
@@ -235,10 +221,8 @@
     </div>
   </footer>
 
-  <!-- Back to Top -->
   <button class="back-to-top" aria-label="Back to top">↑</button>
 
-  <!-- Response Modal -->
   <div class="modal-overlay" data-modal="response">
     <div class="modal glass response-modal">
       <div class="response-suspect">
@@ -259,18 +243,23 @@
     <div class="modal glass">
       <div class="modal-title" style="font-size:22px; font-weight:800; margin-bottom:6px;">✏️ Edit Detective Name</div>
       <div class="modal-message" style="margin-bottom:16px;">Personalize your sleuth identity.</div>
-      <div style="display:flex;flex-direction:column;gap:12px;"><input class="name-edit-input" data-name-input maxlength="24" placeholder="Enter name"></div>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <input class="name-edit-input" data-name-input maxlength="24" placeholder="Enter name">
+      </div>
       <div class="modal-actions" style="margin-top:18px;">
         <button class="btn btn-secondary" data-modal-close>Cancel</button>
         <button class="btn btn-primary" data-name-save>Save Name</button>
       </div>
     </div>
   </div>
+
   <div class="modal-overlay" data-modal="contact-success">
     <div class="modal glass">
       <div class="modal-title">Message sent!</div>
       <div class="modal-message"></div>
-      <div class="modal-actions"><button class="btn btn-primary" data-modal-close>Close</button></div>
+      <div class="modal-actions">
+        <button class="btn btn-primary" data-modal-close>Close</button>
+      </div>
     </div>
   </div>
 

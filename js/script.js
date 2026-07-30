@@ -1159,13 +1159,628 @@
   }
 
   /* ============================================
+     CONSTANTS - v2 NEW FEATURES
+     ============================================ */
+  const APP_VERSION = 'v2.0.0';
+  const LS_KEYS = {
+    profile: 'ai-detective-profile',
+    prefs: 'ai-detective-prefs',
+    achievements: 'ai-detective-achievements',
+    stats: 'ai-detective-stats',
+    dailyDate: 'ai-detective-daily-date',
+    dailyChallenge: 'ai-detective-daily-challenge',
+    soundDone: 'ai-detective-sfx-initialized'
+  };
+
+  const DEFAULT_PROFILE = {
+    name: 'Rookie Detective',
+    rank: 'Cadet',
+    xp: 0,
+    level: 1,
+    casesSolved: 0,
+    correct: 0,
+    attempted: 0,
+    totalClues: 0,
+    timePlayed: 0
+  };
+
+  const RANK_LADDER = [
+    { rank: 'Cadet', min: 0 },
+    { rank: 'Private Eye', min: 300 },
+    { rank: 'Inspector', min: 900 },
+    { rank: 'Detective', min: 2000 },
+    { rank: 'Master Sleuth', min: 4500 },
+    { rank: 'Legend', min: 9000 }
+  ];
+
+  const ACHIEVEMENTS = [
+    { id: 'first_investigation', name: 'First Investigation', icon: '🔍', desc: 'Complete your first case.', reward: 100, check: function (p) { return p.casesSolved >= 1; }, progress: function (p) { return { cur: Math.min(p.casesSolved, 1), max: 1 }; } },
+    { id: 'evidence_collector', name: 'Evidence Collector', icon: '🧰', desc: 'Collect 20 pieces of evidence across all cases.', reward: 150, check: function (p) { return p.totalClues >= 20; }, progress: function (p) { return { cur: Math.min(p.totalClues, 20), max: 20 }; } },
+    { id: 'master_detective', name: 'Master Detective', icon: '🏆', desc: 'Solve 10 cases with a minimum 80% accuracy.', reward: 500, check: function (p) { return p.casesSolved >= 10 && computeAccuracy(p) >= 80; }, progress: function (p) { return { cur: Math.min(p.casesSolved, 10), max: 10 }; } },
+    { id: 'speed_solver', name: 'Speed Solver', icon: '⚡', desc: 'Accumulate less than 10 minutes of total solving time for 3 completed cases.', reward: 250, check: function (p) { return p.casesSolved >= 3 && p.timePlayed < 600; }, progress: function (p) { return { cur: Math.min(p.casesSolved, 3), max: 3 }; } },
+    { id: 'no_hint_used', name: 'No Hint Used', icon: '🎯', desc: 'Complete 5 cases with 100% evidence collected (every clue).', reward: 300, check: function (p) { return (p.attempted > 0 && p.casesSolved >= 5); }, progress: function (p) { return { cur: Math.min(p.casesSolved, 5), max: 5 }; } },
+    { id: 'perfect_investigation', name: 'Perfect Investigation', icon: '💯', desc: 'Earn a 100% accuracy rate after 4 or more cases.', reward: 400, check: function (p) { return p.attempted >= 4 && computeAccuracy(p) >= 100; }, progress: function (p) { return { cur: p.attempted, max: Math.max(p.attempted, 4) }; } }
+  ];
+
+  /* ============================================
+     STORAGE HELPERS
+     ============================================ */
+  function readLS(key, fallback) {
+    try {
+      const raw = localStorage.getItem(key);
+      return raw ? JSON.parse(raw) : fallback;
+    } catch (e) { return fallback; }
+  }
+  function writeLS(key, value) {
+    try { localStorage.setItem(key, JSON.stringify(value)); } catch (e) { /* ignore */ }
+  }
+
+  function computeAccuracy(profile) {
+    if (!profile || !profile.attempted) return 0;
+    return Math.round((profile.correct / profile.attempted) * 100);
+  }
+
+  function updateRank(profile) {
+    let best = RANK_LADDER[0].rank;
+    for (let i = 0; i < RANK_LADDER.length; i++) {
+      if (profile.xp >= RANK_LADDER[i].min) best = RANK_LADDER[i].rank;
+    }
+    profile.rank = best;
+    return profile;
+  }
+
+  function xpLevel(profile) {
+    profile.level = 1 + Math.floor(profile.xp / 500);
+    return profile;
+  }
+
+  function getProfile() {
+    const saved = readLS(LS_KEYS.profile, null);
+    const profile = Object.assign({}, DEFAULT_PROFILE, saved || {});
+    return updateRank(xpLevel(profile));
+  }
+
+  function saveProfile(profile) {
+    updateRank(xpLevel(profile));
+    writeLS(LS_KEYS.profile, profile);
+    return profile;
+  }
+
+  function addXP(amount) {
+    const p = getProfile();
+    p.xp += amount;
+    return saveProfile(p);
+  }
+
+  function recordAttempt(correct, cluesFound, seconds) {
+    const p = getProfile();
+    p.attempted += 1;
+    if (correct) {
+      p.correct += 1;
+      p.casesSolved += 1;
+    }
+    p.totalClues += Math.max(0, cluesFound || 0);
+    p.timePlayed += Math.max(0, seconds || 0);
+    return saveProfile(p);
+  }
+
+  /* ============================================
+     PREFERENCES (Sound, Animations, Theme)
+     ============================================ */
+  function getPreferences() {
+    return Object.assign({
+      sound: false,
+      animations: true
+    }, readLS(LS_KEYS.prefs, {}));
+  }
+  function savePreferences(prefs) { writeLS(LS_KEYS.prefs, prefs); applyPreferences(prefs); }
+
+  function applyPreferences(prefs) {
+    document.documentElement.setAttribute('data-animations', prefs.animations ? 'true' : 'false');
+  }
+
+  /* ============================================
+     AUDIO (Lightweight beeps via WebAudio)
+     ============================================ */
+  let audioCtx = null;
+  function playSfx(type) {
+    const prefs = getPreferences();
+    if (!prefs.sound) return;
+    try {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      const o = audioCtx.createOscillator();
+      const g = audioCtx.createGain();
+      o.connect(g); g.connect(audioCtx.destination);
+      const presets = {
+        click:   { f: 620, d: 0.06, w: 'triangle', v: 0.08 },
+        success: { f: 880, d: 0.2,  w: 'sine',     v: 0.10 },
+        wrong:   { f: 200, d: 0.25, w: 'square',   v: 0.08 },
+        pop:     { f: 520, d: 0.1,  w: 'sine',     v: 0.07 }
+      };
+      const p = presets[type] || presets.click;
+      o.type = p.w;
+      o.frequency.setValueAtTime(p.f, audioCtx.currentTime);
+      g.gain.setValueAtTime(p.v, audioCtx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + p.d);
+      o.start();
+      o.stop(audioCtx.currentTime + p.d);
+    } catch (e) { /* ignore */ }
+  }
+
+  /* ============================================
+     FINGERPRINT LOADING SCREEN
+     ============================================ */
+  function initFingerprintLoader() {
+    const loader = document.querySelector('.fp-loader');
+    if (!loader) return;
+    const fill = loader.querySelector('.fp-bar-fill');
+    const pct = loader.querySelector('.fp-percent');
+    const icon = loader.querySelector('.fp-icon');
+    const wrap = loader.querySelector('.fp-wrap');
+    let progress = 0;
+    const interval = setInterval(function () {
+      progress += 3 + Math.random() * 9;
+      if (progress >= 100) {
+        progress = 100;
+        if (fill) fill.style.width = '100%';
+        if (pct)  pct.textContent = '100%';
+        if (icon) icon.classList.add('done');
+        if (wrap) wrap.classList.add('done');
+        clearInterval(interval);
+        setTimeout(hideFpLoader, 600);
+        return;
+      }
+      if (fill) fill.style.width = progress + '%';
+      if (pct)  pct.textContent = Math.floor(progress) + '%';
+    }, 120);
+
+    window.addEventListener('load', function () {
+      setTimeout(hideFpLoader, 2800);
+    });
+  }
+
+  function hideFpLoader() {
+    const loader = document.querySelector('.fp-loader');
+    if (!loader || loader.classList.contains('hidden')) return;
+    loader.classList.add('hidden');
+    document.body.classList.remove('no-scroll');
+  }
+
+  /* ============================================
+     PROFILE RENDERING
+     ============================================ */
+  function renderProfileCard(container) {
+    if (!container) return;
+    const p = getProfile();
+    const accuracy = computeAccuracy(p);
+    const nextRankIdx = Math.min(RANK_LADDER.length - 1,
+      RANK_LADDER.findIndex(function (r) { return r.min > p.xp; }) || RANK_LADDER.length - 1);
+    const nextRank = RANK_LADDER[nextRankIdx] || RANK_LADDER[RANK_LADDER.length - 1];
+    const prevRankMin = nextRankIdx > 0 ? RANK_LADDER[nextRankIdx - 1].min : 0;
+    const towards = nextRank.min - prevRankMin > 0
+      ? Math.round(((p.xp - prevRankMin) / (nextRank.min - prevRankMin)) * 100)
+      : 100;
+    const initials = p.name.replace(/[^A-Za-z0-9 ]/g, '').trim().split(/\s+/).map(function (s) { return s[0]; }).join('').slice(0, 2).toUpperCase() || '🧑';
+
+    container.innerHTML = '';
+    const card = document.createElement('div');
+    card.className = 'profile-card glass';
+    card.innerHTML =
+      '<div class="profile-header">' +
+        '<div class="profile-avatar">' + initials + '</div>' +
+        '<div class="profile-name-wrap">' +
+          '<div class="profile-name" data-profile-name>' +
+            '<span data-profile-text>' + escapeHtml(p.name) + '</span>' +
+            '<button class="profile-edit-btn" data-profile-edit title="Edit name">✎</button>' +
+          '</div>' +
+          '<span class="profile-rank">🎖️ ' + p.rank + ' · Lvl ' + p.level + '</span>' +
+        '</div>' +
+      '</div>' +
+      '<div class="profile-stats">' +
+        '<div class="profile-stat"><div class="profile-stat-value" data-counter="' + p.xp + '">' + p.xp.toLocaleString() + '</div><div class="profile-stat-label">XP Total</div></div>' +
+        '<div class="profile-stat"><div class="profile-stat-value" data-counter="' + p.casesSolved + '">' + p.casesSolved + '</div><div class="profile-stat-label">Cases Solved</div></div>' +
+        '<div class="profile-stat"><div class="profile-stat-value" data-counter="' + accuracy + '" data-suffix="%">0%</div><div class="profile-stat-label">Accuracy</div></div>' +
+        '<div class="profile-stat"><div class="profile-stat-value">#<span data-counter="' + (1000 - Math.min(p.casesSolved * 3, 900)) + '">' + (1000 - Math.min(p.casesSolved * 3, 900)) + '</span></div><div class="profile-stat-label">Rank</div></div>' +
+      '</div>' +
+      '<div class="xp-bar"><div class="xp-bar-fill" style="width:' + Math.max(2, Math.min(100, towards)) + '%"></div></div>' +
+      '<div class="xp-bar-label"><span>→ ' + escapeHtml(nextRank.rank) + '</span><span>' + p.xp.toLocaleString() + ' / ' + nextRank.min.toLocaleString() + ' XP</span></div>';
+
+    container.appendChild(card);
+
+    const editBtn = card.querySelector('[data-profile-edit]');
+    if (editBtn) {
+      editBtn.addEventListener('click', function () { playSfx('click'); promptNameChange(container); });
+    }
+  }
+
+  function promptNameChange(container) {
+    const current = getProfile().name;
+    const overlay = document.querySelector('[data-modal="name-edit"]');
+    if (overlay) {
+      const input = overlay.querySelector('[data-name-input]');
+      if (input) input.value = current;
+      const saveBtn = overlay.querySelector('[data-name-save]');
+      if (saveBtn) {
+        saveBtn.onclick = function () {
+          const newName = input.value.trim();
+          if (newName && newName.length <= 24) {
+            const p = getProfile();
+            p.name = newName;
+            saveProfile(p);
+            renderProfileCard(container);
+            closeModal(overlay);
+            playSfx('success');
+          }
+        };
+      }
+      openModal(overlay);
+      setTimeout(function () { if (input) input.focus(); }, 120);
+      return;
+    }
+    const newName = window.prompt('Edit detective name:', current);
+    if (newName && newName.trim() && newName.length <= 24) {
+      const p = getProfile();
+      p.name = newName.trim();
+      saveProfile(p);
+      renderProfileCard(container);
+      playSfx('success');
+    }
+  }
+
+  function escapeHtml(str) {
+    return String(str).replace(/[&<>"']/g, function (c) {
+      return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c];
+    });
+  }
+
+  /* ============================================
+     ACHIEVEMENTS
+     ============================================ */
+  function computeAchievements() {
+    const profile = getProfile();
+    const unlocked = {};
+    ACHIEVEMENTS.forEach(function (a) {
+      unlocked[a.id] = !!a.check(profile);
+    });
+    return unlocked;
+  }
+
+  function initAchievementsPage() {
+    const grid = document.querySelector('[data-achievements-grid]');
+    if (!grid) return;
+    const profile = getProfile();
+    const unlockedState = computeAchievements();
+    grid.innerHTML = ACHIEVEMENTS.map(function (a) {
+      const isUnlocked = unlockedState[a.id];
+      const prog = a.progress(profile);
+      const pct = prog.max > 0 ? Math.min(100, Math.round((prog.cur / prog.max) * 100)) : 0;
+      return '<div class="ach-card glass ' + (isUnlocked ? 'unlocked' : 'locked') + '">' +
+        '<div class="ach-top">' +
+          '<div class="ach-icon">' + a.icon + '</div>' +
+          '<div class="ach-title-wrap">' +
+            '<span class="ach-status ' + (isUnlocked ? 'unlocked' : 'locked') + '">' + (isUnlocked ? 'UNLOCKED' : 'LOCKED') + '</span>' +
+            '<div class="ach-name">' + escapeHtml(a.name) + '</div>' +
+          '</div>' +
+        '</div>' +
+        '<p class="ach-desc">' + escapeHtml(a.desc) + '</p>' +
+        '<div class="ach-progress">' +
+          '<div class="ach-progress-row"><span>Progress</span><span>' + prog.cur + ' / ' + prog.max + '</span></div>' +
+          '<div class="ach-progress-bar"><div class="ach-progress-fill" style="width:' + pct + '%"></div></div>' +
+        '</div>' +
+        '<span class="ach-reward">✨ Reward: +' + a.reward + ' XP</span>' +
+      '</div>';
+    }).join('');
+
+    document.querySelectorAll('.ach-progress-fill').forEach(function (el) {
+      el.addEventListener('mouseenter', function () { playSfx('pop'); });
+    });
+
+    const summary = document.querySelector('[data-achievements-summary]');
+    if (summary) {
+      const total = ACHIEVEMENTS.length;
+      const got = Object.values(unlockedState).filter(Boolean).length;
+      const xpEarned = ACHIEVEMENTS.reduce(function (acc, a) { return acc + (unlockedState[a.id] ? a.reward : 0); }, 0);
+      summary.innerHTML =
+        '<div class="stats-grid">' +
+          '<div class="stat-card glass"><div class="stat-card-top"><div class="stat-icon">🏅</div><span class="stat-trend">' + got + '/' + total + '</span></div>' +
+            '<div class="stat-value">' + got + '<span style="font-size:18px; opacity:0.6;"> / ' + total + '</span></div><div class="stat-label">Achievements Unlocked</div></div>' +
+          '<div class="stat-card glass"><div class="stat-card-top"><div class="stat-icon">✨</div><span class="stat-trend">+XP</span></div>' +
+            '<div class="stat-value" data-counter="' + xpEarned + '">' + xpEarned.toLocaleString() + '</div><div class="stat-label">XP From Achievements</div></div>' +
+          '<div class="stat-card glass"><div class="stat-card-top"><div class="stat-icon">🎖️</div><span class="stat-trend">' + profile.rank + '</span></div>' +
+            '<div class="stat-value">' + escapeHtml(profile.rank) + '</div><div class="stat-label">Current Rank</div></div>' +
+          '<div class="stat-card glass"><div class="stat-card-top"><div class="stat-icon">⚙️</div><span class="stat-trend">Lvl ' + profile.level + '</span></div>' +
+            '<div class="stat-value">' + profile.level + '</div><div class="stat-label">Detective Level</div></div>' +
+        '</div>';
+      initCounters();
+    }
+  }
+
+  /* ============================================
+     DAILY CHALLENGE (seeded daily)
+     ============================================ */
+  function seedFromDate(date) {
+    const iso = date.toISOString().slice(0, 10);
+    let hash = 0;
+    for (let i = 0; i < iso.length; i++) hash = (hash * 31 + iso.charCodeAt(i)) >>> 0;
+    return hash;
+  }
+
+  function getDailyChallenge() {
+    const today = new Date();
+    const iso = today.toISOString().slice(0, 10);
+    const cachedDate = localStorage.getItem(LS_KEYS.dailyDate);
+    const cached = readLS(LS_KEYS.dailyChallenge, null);
+    if (cachedDate === iso && cached) return cached;
+
+    const seed = seedFromDate(today);
+    const pool = typeof CASES !== 'undefined' && CASES.length ? CASES : [
+      { id: 'dc-fallback', title: 'Midnight Mystery', icon: '🌙', difficulty: 'medium', difficultyLabel: 'Medium', time: '25 min', desc: 'A classic whodunit.' }
+    ];
+    const chosen = pool[seed % pool.length];
+    const xpReward = 120 + (seed % 240);
+    const diffIndex = ['easy', 'medium', 'hard'].indexOf(chosen.difficulty);
+    const multiplier = [1, 1.6, 2.4][diffIndex >= 0 ? diffIndex : 1];
+    const result = {
+      id: chosen.id,
+      title: chosen.title,
+      icon: chosen.icon,
+      difficulty: chosen.difficulty,
+      difficultyLabel: chosen.difficultyLabel,
+      time: chosen.time,
+      desc: chosen.desc,
+      xp: Math.round(xpReward * multiplier),
+      date: iso
+    };
+    localStorage.setItem(LS_KEYS.dailyDate, iso);
+    writeLS(LS_KEYS.dailyChallenge, result);
+    return result;
+  }
+
+  function initDailyChallenge() {
+    const host = document.querySelector('[data-daily-challenge]');
+    if (!host) return;
+    const d = getDailyChallenge();
+    host.innerHTML =
+      '<div class="daily-card glass glass-glow">' +
+        '<div>' +
+          '<span class="daily-badge">📅 DAILY CHALLENGE · Resets in ' + hoursLeft() + 'h</span>' +
+          '<h3 class="daily-title"><span>' + escapeHtml(d.title) + '</span></h3>' +
+          '<p class="daily-desc">' + escapeHtml(d.desc || 'Solve today\'s featured mystery and earn bonus XP before midnight rolls over to a brand new challenge.') + '</p>' +
+          '<div class="daily-meta">' +
+            '<span class="daily-tag ' + d.difficulty + '">🎚️ Difficulty: ' + d.difficultyLabel + '</span>' +
+            '<span class="daily-tag">⏱️ ~' + (d.time || '20 min') + '</span>' +
+            '<span class="daily-tag xp">✨ +' + d.xp + ' XP Bonus</span>' +
+          '</div>' +
+          '<a href="game.html?case=' + encodeURIComponent(d.id) + '" class="btn btn-primary btn-lg">🔥 Play Today\'s Challenge</a>' +
+        '</div>' +
+        '<div class="daily-visual">' + (d.icon || '🔎') + '</div>' +
+      '</div>';
+  }
+
+  function hoursLeft() {
+    const now = new Date();
+    const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+    return Math.max(0, Math.ceil((tomorrow - now) / 3600000));
+  }
+
+  /* ============================================
+     STATS DASHBOARD (6 animated cards)
+     ============================================ */
+  function initStatsDashboard() {
+    const host = document.querySelector('[data-stats-dashboard]');
+    if (!host) return;
+    const p = getProfile();
+    const acc = computeAccuracy(p);
+    const rankIdx = Math.max(0, RANK_LADDER.length - RANK_LADDER.findIndex(function (r) { return r.rank === p.rank; }) - 1);
+    const globalRank = 1 + rankIdx * 137 + (1000 - Math.min(p.casesSolved * 3, 900));
+
+    const cards = [
+      { icon: '📁', label: 'Total Cases Solved',   value: p.casesSolved, suffix: '', trend: '+' + Math.max(1, p.casesSolved), color: 'purple' },
+      { icon: '🎯', label: 'Accuracy',            value: acc,           suffix: '%', trend: acc >= 80 ? 'Great' : 'Rising', color: 'green' },
+      { icon: '✨', label: 'XP',                  value: p.xp,          suffix: '', trend: 'Lvl ' + p.level, color: 'pink' },
+      { icon: '🏅', label: 'Global Rank',         value: globalRank,    suffix: '', trend: p.rank, color: 'amber' },
+      { icon: '🧩', label: 'Total Clues Found',   value: p.totalClues,  suffix: '', trend: 'Always learning', color: 'cyan' },
+      { icon: '⏱️', label: 'Time Played',         value: Math.round(p.timePlayed / 60), suffix: ' min', trend: Math.round(p.timePlayed / 3600) + 'h total', color: 'red' }
+    ];
+
+    host.innerHTML = '<div class="stats-grid">' + cards.map(function (c) {
+      return '<div class="stat-card glass glass-glow reveal">' +
+        '<div class="stat-card-top">' +
+          '<div class="stat-icon ' + c.color + '">' + c.icon + '</div>' +
+          '<span class="stat-trend">' + c.trend + '</span>' +
+        '</div>' +
+        '<div class="stat-value" data-counter="' + c.value + '" data-suffix="' + c.suffix + '">0</div>' +
+        '<div class="stat-label">' + c.label + '</div>' +
+      '</div>';
+    }).join('') + '</div>';
+
+    initCounters();
+    initReveal();
+  }
+
+  /* ============================================
+     TIMELINE (scroll-animated)
+     ============================================ */
+  function buildTimeline(container, events) {
+    if (!container || !events || !events.length) return;
+    container.className = 'timeline';
+    container.innerHTML = events.map(function (ev) {
+      return '<div class="tl-item" data-tl-item>' +
+        '<div class="tl-dot"></div>' +
+        '<span class="tl-time">' + escapeHtml(ev.time) + '</span>' +
+        '<div class="tl-content">' +
+          '<div class="tl-title">' + escapeHtml(ev.title) + '</div>' +
+          '<p class="tl-desc">' + escapeHtml(ev.desc || '') + '</p>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+
+    const items = container.querySelectorAll('[data-tl-item]');
+    const io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry, i) {
+        if (entry.isIntersecting) {
+          const delay = 80 * (entry.target.getAttribute('data-tl-delay') || i);
+          setTimeout(function () { entry.target.classList.add('visible'); }, delay);
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    items.forEach(function (el, idx) { el.setAttribute('data-tl-delay', idx); io.observe(el); });
+  }
+
+  function initTimelines() {
+    const defaults = [
+      { time: '08:00 PM', title: 'Victim entered hotel', desc: 'Seen entering via the main entrance by two witnesses and the lobby camera.' },
+      { time: '08:20 PM', title: 'Power outage',      desc: 'A 4-minute blackout affected only the east wing — security cameras went dark.' },
+      { time: '08:24 PM', title: 'Witness heard scream', desc: 'Guest on 3rd floor reported a loud scream followed by running footsteps.' },
+      { time: '08:30 PM', title: 'Knife discovered',    desc: 'Chambermaid found a pearl-handled knife discarded behind the ice machine.' },
+      { time: '08:47 PM', title: '911 call placed',     desc: 'Front desk called emergency services; paramedics arrived 14 minutes later.' },
+      { time: '09:05 PM', title: 'First officers on scene', desc: 'Detectives sealed off the 4th floor — interviewing begins.' }
+    ];
+
+    document.querySelectorAll('[data-timeline]').forEach(function (container) {
+      const raw = container.getAttribute('data-timeline');
+      let events = defaults;
+      try { if (raw && raw.trim()) events = JSON.parse(raw); } catch (e) { events = defaults; }
+      buildTimeline(container, events);
+    });
+  }
+
+  /* ============================================
+     SETTINGS PANEL (Sound / Animations / Theme)
+     ============================================ */
+  function initSettingsPanel() {
+    const toggle = document.querySelectorAll('[data-settings-toggle]');
+    const panel = document.querySelector('[data-settings-panel]');
+    const overlay = document.querySelector('[data-settings-overlay]');
+    const closeBtn = document.querySelector('[data-settings-close]');
+    if (!panel) return;
+
+    function openPanel() {
+      panel.classList.add('active');
+      if (overlay) overlay.classList.add('active');
+      document.body.classList.add('no-scroll');
+      populateSettings();
+      playSfx('pop');
+    }
+    function closePanel() {
+      panel.classList.remove('active');
+      if (overlay) overlay.classList.remove('active');
+      const otherModals = document.querySelectorAll('.modal-overlay.active, .mobile-menu.active');
+      if (!otherModals.length) document.body.classList.remove('no-scroll');
+    }
+
+    toggle.forEach(function (t) { t.addEventListener('click', openPanel); });
+    if (closeBtn) closeBtn.addEventListener('click', closePanel);
+    if (overlay)  overlay.addEventListener('click', closePanel);
+
+    populateSettings();
+  }
+
+  function populateSettings() {
+    const panel = document.querySelector('[data-settings-panel]');
+    if (!panel) return;
+    const prefs = getPreferences();
+    const theme = document.documentElement.getAttribute('data-theme') || 'dark';
+    const versionTag = panel.querySelector('[data-app-version]');
+    if (versionTag) versionTag.textContent = APP_VERSION;
+
+    const soundCb = panel.querySelector('[data-pref="sound"]');
+    const animCb  = panel.querySelector('[data-pref="animations"]');
+    const themeCb = panel.querySelector('[data-pref="theme"]');
+    if (soundCb) { soundCb.checked = !!prefs.sound; soundCb.onchange = function () {
+      const np = getPreferences(); np.sound = soundCb.checked; savePreferences(np);
+      if (np.sound) playSfx('success');
+    }; }
+    if (animCb)  { animCb.checked  = !!prefs.animations; animCb.onchange = function () {
+      const np = getPreferences(); np.animations = animCb.checked; savePreferences(np);
+    }; }
+    if (themeCb) { themeCb.checked = theme === 'dark'; themeCb.onchange = function () {
+      const next = themeCb.checked ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('ai-detective-theme', next);
+      updateThemeIcons(next);
+      const icons = document.querySelectorAll('[data-theme-icon]');
+      icons.forEach(function (icon) { icon.textContent = next === 'dark' ? '☀️' : '🌙'; });
+      playSfx('click');
+    }; }
+  }
+
+  /* ============================================
+     HOOK: AFTER GAME WIN - UPDATE PROFILE
+     ============================================ */
+  function hookGameEvents() {
+    const _processAccusation = window.__oldProcess || processAccusation;
+    if (window.__gameHooked) return;
+    window.__gameHooked = true;
+    const original = processAccusation;
+    window.__oldProcess = original;
+    window.processAccusation = function (suspectId) {
+      const correct = gameState && gameState.caseData && (
+        gameState.caseData.suspects.find(function (s) { return s.id === suspectId; }) || {}
+      ).name === gameState.caseData.culprit;
+      const seconds = gameState.timer | 0;
+      const clues = gameState.clues ? gameState.clues.length : 0;
+      recordAttempt(correct, clues, seconds);
+      if (correct) {
+        const challenge = getDailyChallenge();
+        let xp = calculateScore();
+        if (challenge && gameState.caseId === challenge.id) xp += challenge.xp;
+        addXP(xp);
+      }
+      return original.apply(this, arguments);
+    };
+  }
+
+  /* ============================================
+     ENHANCEMENTS: BUTTON RADIAL HOVER, SFX
+     ============================================ */
+  function initMicroEnhancements() {
+    document.addEventListener('mousemove', function (e) {
+      const btn = e.target.closest('.btn-primary, .case-btn, .nav-cta');
+      if (!btn) return;
+      const r = btn.getBoundingClientRect();
+      btn.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+      btn.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+    });
+
+    document.addEventListener('click', function (e) {
+      const a = e.target.closest('a, button, .filter-btn, .question-btn, .accuse-option');
+      if (a) playSfx('click');
+    }, true);
+  }
+
+  /* ============================================
+     RENDER: Nav / Footer profile mini-widgets,
+     version tags, profile card on any page.
+     ============================================ */
+  function renderAllWidgets() {
+    document.querySelectorAll('[data-profile-card]').forEach(renderProfileCard);
+    initDailyChallenge();
+    initStatsDashboard();
+    initAchievementsPage();
+    initTimelines();
+
+    document.querySelectorAll('[data-app-version]').forEach(function (el) {
+      el.textContent = APP_VERSION;
+    });
+  }
+
+  /* ============================================
      INITIALIZATION
      ============================================ */
   function init() {
+    // apply prefs FIRST (animations toggle)
+    applyPreferences(getPreferences());
+
+    initFingerprintLoader();
     initLoader();
     initParticles();
     initCursor();
     initTheme();
+    initSettingsPanel();
     initNavbar();
     initMobileMenu();
     initTyping();
@@ -1177,9 +1792,13 @@
     initModals();
     initLeaderboard();
     initContactForm();
+    initMicroEnhancements();
+
+    renderAllWidgets();
 
     if (document.querySelector('[data-game-story]')) {
       initGamePage();
+      hookGameEvents();
     }
   }
 

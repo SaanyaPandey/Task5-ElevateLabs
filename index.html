@@ -9,7 +9,16 @@
 </head>
 <body class="no-scroll">
 
-  <!-- Loading Screen -->
+  <!-- Fingerprint Loading Screen -->
+  <div class="fp-loader">
+    <div class="fp-wrap">
+      <div class="fp-icon">🔍<div class="fp-scan"></div></div>
+      <div class="fp-text">Scanning credentials...</div>
+      <div class="fp-bar"><div class="fp-bar-fill"></div></div>
+      <div class="fp-percent">0%</div>
+    </div>
+  </div>
+  <!-- Legacy fallback loader -->
   <div class="loader">
     <div class="loader-spinner"></div>
     <div class="loader-text">Loading AI Detective...</div>
@@ -34,10 +43,12 @@
         <li><a href="cases.html">Cases</a></li>
         <li><a href="game.html">Game</a></li>
         <li><a href="leaderboard.html">Leaderboard</a></li>
+        <li><a href="achievements.html">Achievements</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
       <div class="nav-actions">
+        <button class="settings-toggle" data-settings-toggle aria-label="Settings">⚙️</button>
         <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme">
           <span data-theme-icon>☀️</span>
         </button>
@@ -61,6 +72,8 @@
       <li><a href="leaderboard.html">🏆 Leaderboard</a></li>
       <li><a href="about.html">ℹ️ About</a></li>
       <li><a href="contact.html">✉️ Contact</a></li>
+      <li><a href="achievements.html">🏅 Achievements</a></li>
+      <li><a href="#" data-settings-toggle>⚙️ Settings</a></li>
     </ul>
   </div>
 
@@ -328,6 +341,49 @@
               <p>New cases drop every week! Our writing team is constantly working on fresh mysteries across all difficulty levels. Follow us on social media or check back every Monday to see what's new in the case files.</p>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="daily">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="section-tag">📅 DAILY</span>
+          <h2 class="section-title">Today's Challenge</h2>
+          <p class="section-desc">A fresh mystery lands every 24 hours with bonus XP. Finish it before midnight to lock in the reward!</p>
+        </div>
+        <div data-daily-challenge class="reveal"></div>
+      </div>
+    </section>
+
+    <section class="section" id="stats">
+      <div class="container">
+        <div class="section-head reveal">
+          <span class="section-tag">📊 DASHBOARD</span>
+          <h2 class="section-title">Detective Statistics</h2>
+          <p class="section-desc">Track your performance across every case. Counters animate as soon as they scroll into view.</p>
+        </div>
+        <div data-stats-dashboard class="reveal"></div>
+      </div>
+    </section>
+
+    <section class="section" id="profile">
+      <div class="container" style="display:grid; grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.15fr); gap: 28px; align-items:start;">
+        <div class="reveal">
+          <div class="section-head" style="text-align:left; margin-bottom:14px;">
+            <span class="section-tag">🕵️ PROFILE</span>
+            <h2 class="section-title" style="margin-bottom:6px;">Your Detective Card</h2>
+            <p class="section-desc">Click the pencil to rename your sleuth. XP &amp; accuracy update automatically after every case.</p>
+          </div>
+          <div data-profile-card></div>
+        </div>
+        <div class="reveal">
+          <div class="section-head" style="text-align:left; margin-bottom:14px;">
+            <span class="section-tag">📜 TIMELINE</span>
+            <h2 class="section-title" style="margin-bottom:6px;">Evidence Timeline Preview</h2>
+            <p class="section-desc">Every case builds a visual chronological record. Scroll down to watch each event animate in.</p>
+          </div>
+          <div data-timeline></div>
         </div>
       </div>
     </section>
