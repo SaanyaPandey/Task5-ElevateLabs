@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Solve an interactive detective mystery. Collect evidence, question suspects, and find the culprit.">
+  <title>Game - AI Detective</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="no-scroll">
+
+  <!-- Loading Screen -->
+  <div class="loader">
+    <div class="loader-spinner"></div>
+    <div class="loader-text">Preparing Investigation...</div>
+  </div>
+
+  <!-- Particle Background -->
+  <div class="particles"></div>
+
+  <!-- Custom Cursor -->
+  <div class="cursor"></div>
+  <div class="cursor-follower"></div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <span class="nav-logo-icon">🔍</span>
+        <span class="nav-logo-text">AI Detective</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="cases.html">Cases</a></li>
+        <li><a href="game.html">Game</a></li>
+        <li><a href="leaderboard.html">Leaderboard</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme">
+          <span data-theme-icon>☀️</span>
+        </button>
+        <a href="cases.html" class="nav-cta">📁 All Cases</a>
+        <button class="nav-toggle" aria-label="Menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-overlay"></div>
+  <div class="mobile-menu">
+    <ul>
+      <li><a href="index.html">🏠 Home</a></li>
+      <li><a href="cases.html">📁 Cases</a></li>
+      <li><a href="game.html">🎮 Game</a></li>
+      <li><a href="leaderboard.html">🏆 Leaderboard</a></li>
+      <li><a href="about.html">ℹ️ About</a></li>
+      <li><a href="contact.html">✉️ Contact</a></li>
+    </ul>
+  </div>
+
+  <!-- Main -->
+  <main class="game-container">
+    <div class="container">
+
+      <!-- Case Title Bar -->
+      <div class="text-center mb-8 reveal">
+        <span class="section-tag">ACTIVE INVESTIGATION</span>
+        <h1 class="section-title" style="margin-top:16px; margin-bottom:10px;">Case: <span data-game-title>Loading...</span></h1>
+        <p class="section-subtitle" style="margin-bottom:40px;">Analyze evidence, interview suspects, and identify the culprit. Good luck, detective.</p>
+      </div>
+
+      <div class="game-layout">
+
+        <!-- Sidebar -->
+        <aside class="game-sidebar">
+          <!-- Progress -->
+          <div class="game-progress-section glass">
+            <div class="game-progress-label">
+              <span>📊 Investigation Progress</span>
+              <span data-progress-label>0%</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" data-progress-fill style="width: 0%;"></div>
+            </div>
+          </div>
+
+          <!-- Timer -->
+          <div class="game-timer-section glass">
+            <div class="timer-display">
+              <div class="timer-value" data-timer-display>00:00</div>
+              <div class="timer-label">⏱️ Time Elapsed</div>
+            </div>
+            <div class="timer-controls">
+              <button class="timer-btn" data-timer-start title="Start">▶</button>
+              <button class="timer-btn" data-timer-pause title="Pause">⏸</button>
+              <button class="timer-btn" data-timer-reset title="Reset">↺</button>
+            </div>
+          </div>
+
+          <!-- Notebook -->
+          <div class="game-notebook-section glass">
+            <div class="notebook-title">📓 Detective Notebook</div>
+            <ul class="notebook-list" data-notebook-list>
+              <li style="text-align:center; color: var(--text-secondary);">📒 No notes yet</li>
+            </ul>
+          </div>
+
+          <!-- Quick Tips -->
+          <div class="glass" style="padding:20px;">
+            <div class="notebook-title">💡 Pro Tips</div>
+            <ul style="list-style: none; display:flex; flex-direction:column; gap:10px;">
+              <li style="font-size:13px; color: var(--text-secondary); line-height:1.6;">✅ Click evidence to analyze it</li>
+              <li style="font-size:13px; color: var(--text-secondary); line-height:1.6;">❓ Question every suspect</li>
+              <li style="font-size:13px; color: var(--text-secondary); line-height:1.6;">🔍 Look for contradictions</li>
+              <li style="font-size:13px; color: var(--text-secondary); line-height:1.6;">⚖️ Accuse only when confident</li>
+            </ul>
+          </div>
+        </aside>
+
+        <!-- Main Game Area -->
+        <div class="game-main">
+
+          <!-- Story Section -->
+          <section class="story-section glass reveal">
+            <div class="section-heading">
+              <div class="section-heading-icon">📖</div>
+              <h2>Case Briefing</h2>
+            </div>
+            <div class="story-text" data-game-story>
+              <p>Loading case details...</p>
+            </div>
+          </section>
+
+          <!-- Evidence Section -->
+          <section class="evidence-section glass reveal">
+            <div class="section-heading">
+              <div class="section-heading-icon">🔍</div>
+              <h2>Evidence Panel</h2>
+            </div>
+            <div class="evidence-grid" data-evidence-grid>
+              <!-- Evidence rendered by JS -->
+            </div>
+          </section>
+
+          <!-- Suspects Section -->
+          <section class="suspects-section glass reveal">
+            <div class="section-heading">
+              <div class="section-heading-icon">👥</div>
+              <h2>Persons of Interest</h2>
+            </div>
+            <div class="suspects-grid" data-suspects-grid>
+              <!-- Suspects rendered by JS -->
+            </div>
+          </section>
+
+          <!-- Clues Section -->
+          <section class="clues-section glass reveal">
+            <div class="section-heading">
+              <div class="section-heading-icon">🧩</div>
+              <h2>Collected Clues</h2>
+            </div>
+            <div class="clues-grid" data-clues-grid>
+              <div class="clue-item empty glass">🔍 No clues collected yet. Question suspects and analyze evidence.</div>
+            </div>
+          </section>
+
+          <!-- Action Bar -->
+          <div class="game-actions">
+            <a href="cases.html" class="btn btn-secondary btn-lg">📁 Exit Case</a>
+            <button class="btn btn-danger btn-lg accuse-btn" data-accuse-btn>
+              ⚖️ Final Accusation
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <span class="footer-logo-icon">🔍</span>
+            <span class="footer-logo-text">AI Detective</span>
+          </div>
+          <p class="footer-desc">Premium detective mystery experience powered by artificial intelligence.</p>
+          <div class="footer-socials">
+            <a href="#" class="social-link" data-hover>🐦</a>
+            <a href="#" class="social-link" data-hover>📘</a>
+            <a href="#" class="social-link" data-hover>📸</a>
+            <a href="#" class="social-link" data-hover>💬</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Explore</h4>
+          <ul>
+            <li><a href="index.html">→ Home</a></li>
+            <li><a href="cases.html">→ All Cases</a></li>
+            <li><a href="game.html">→ Play Game</a></li>
+            <li><a href="leaderboard.html">→ Leaderboard</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="about.html">→ About Us</a></li>
+            <li><a href="contact.html">→ Contact</a></li>
+            <li><a href="about.html#future">→ Future Roadmap</a></li>
+            <li><a href="about.html#tech">→ Technology</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="#">→ Privacy Policy</a></li>
+            <li><a href="#">→ Terms of Service</a></li>
+            <li><a href="#">→ Cookie Policy</a></li>
+            <li><a href="contact.html">→ Report Bug</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-bottom-text">© 2026 AI Detective. All rights reserved.</div>
+        <div class="footer-bottom-text">Made with ❤️ for mystery lovers everywhere</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top -->
+  <button class="back-to-top" aria-label="Back to top">↑</button>
+
+  <!-- Suspect Response Modal -->
+  <div class="modal-overlay" data-modal="response">
+    <div class="modal glass response-modal">
+      <div class="response-suspect">
+        <div class="response-avatar">👤</div>
+        <div>
+          <div class="response-name">Suspect Name</div>
+        </div>
+      </div>
+      <div class="response-question">Question text here</div>
+      <div class="response-answer">Answer text here</div>
+      <div class="modal-actions">
+        <button class="btn btn-primary" data-modal-close>Continue Investigation</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Accusation Selection Modal -->
+  <div class="modal-overlay keep-open" data-modal="accuse">
+    <div class="modal glass accuse-modal">
+      <h3 class="accuse-title">⚖️ Name the Culprit</h3>
+      <p style="text-align:center; color: var(--text-secondary); margin-bottom:24px;">Choose carefully. A wrong accusation will fail the case.</p>
+      <div class="accuse-list">
+        <!-- Suspect options rendered by JS -->
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" data-modal-close>Cancel</button>
+        <button class="btn btn-danger" data-confirm-accuse>Confirm Accusation</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Correct Answer Modal -->
+  <div class="modal-overlay" data-modal="correct">
+    <div class="modal glass">
+      <div class="modal-icon success">🎉</div>
+      <h3 class="modal-title success">Case Closed!</h3>
+      <p class="modal-message">You cracked the case!</p>
+      <div class="modal-stats">
+        <div>
+          <div class="modal-stat-num" data-counter="1000" data-suffix="">0</div>
+          <div class="modal-stat-label">SCORE</div>
+        </div>
+        <div>
+          <div class="modal-stat-num">0%</div>
+          <div class="modal-stat-label">PROGRESS</div>
+        </div>
+        <div>
+          <div class="modal-stat-num">00:00</div>
+          <div class="modal-stat-label">TIME</div>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <a href="cases.html" class="btn btn-secondary">📁 Next Case</a>
+        <a href="leaderboard.html" class="btn btn-primary">🏆 Leaderboard</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Wrong Answer Modal -->
+  <div class="modal-overlay" data-modal="wrong">
+    <div class="modal glass">
+      <div class="modal-icon error">❌</div>
+      <h3 class="modal-title error">Wrong Accusation</h3>
+      <p class="modal-message">You accused the wrong person.</p>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" data-modal-close>🔍 Review Clues</button>
+        <a href="game.html" class="btn btn-primary">🔄 Restart Case</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

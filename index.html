@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AI Detective - Become the Ultimate AI Detective. Solve fictional mysteries by collecting clues and questioning suspects.">
+  <title>AI Detective - Become the Ultimate AI Detective</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="no-scroll">
+
+  <!-- Loading Screen -->
+  <div class="loader">
+    <div class="loader-spinner"></div>
+    <div class="loader-text">Loading AI Detective...</div>
+  </div>
+
+  <!-- Particle Background -->
+  <div class="particles"></div>
+
+  <!-- Custom Cursor -->
+  <div class="cursor"></div>
+  <div class="cursor-follower"></div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <span class="nav-logo-icon">🔍</span>
+        <span class="nav-logo-text">AI Detective</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="cases.html">Cases</a></li>
+        <li><a href="game.html">Game</a></li>
+        <li><a href="leaderboard.html">Leaderboard</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme">
+          <span data-theme-icon>☀️</span>
+        </button>
+        <a href="cases.html" class="nav-cta">🎮 Play Now</a>
+        <button class="nav-toggle" aria-label="Menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-overlay"></div>
+  <div class="mobile-menu">
+    <ul>
+      <li><a href="index.html">🏠 Home</a></li>
+      <li><a href="cases.html">📁 Cases</a></li>
+      <li><a href="game.html">🎮 Game</a></li>
+      <li><a href="leaderboard.html">🏆 Leaderboard</a></li>
+      <li><a href="about.html">ℹ️ About</a></li>
+      <li><a href="contact.html">✉️ Contact</a></li>
+    </ul>
+  </div>
+
+  <!-- Main -->
+  <main>
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-grid">
+          <div class="hero-content">
+            <div class="hero-tag reveal">
+              <span class="hero-tag-dot"></span>
+              <span class="hero-tag-text">New cases added weekly</span>
+            </div>
+            <h1 class="hero-title reveal">
+              Become the<br>
+              <span class="gradient-text typing-text" data-phrases="Ultimate AI Detective,Mystery Solver,Crime Analyst,Master Sleuth"></span>
+            </h1>
+            <p class="hero-subtitle reveal">
+              Dive into immersive mysteries powered by artificial intelligence. Collect evidence, interrogate suspects, and crack every case that comes your way.
+            </p>
+            <div class="hero-actions reveal">
+              <a href="cases.html" class="btn btn-primary btn-lg">🚀 Start Investigation</a>
+              <a href="#how" class="btn btn-secondary btn-lg">📖 Learn More</a>
+            </div>
+            <div class="hero-stats reveal">
+              <div class="hero-stat">
+                <div class="hero-stat-number" data-counter="150" data-suffix="+">0</div>
+                <div class="hero-stat-label">Cases Solved</div>
+              </div>
+              <div class="hero-stat">
+                <div class="hero-stat-number" data-counter="50000" data-suffix="+">0</div>
+                <div class="hero-stat-label">Active Detectives</div>
+              </div>
+              <div class="hero-stat">
+                <div class="hero-stat-number" data-counter="99" data-suffix="%">0</div>
+                <div class="hero-stat-label">Accuracy Rate</div>
+              </div>
+            </div>
+          </div>
+          <div class="hero-visual">
+            <div class="detective-illustration reveal-right">
+              <div class="detective-ring"></div>
+              <div class="detective-ring"></div>
+              <div class="detective-ring"></div>
+              <div class="detective-avatar">🕵️</div>
+            </div>
+            <div class="floating-badge">🔎 New clue found</div>
+            <div class="floating-badge">⭐ Case closed</div>
+            <div class="floating-badge">🏆 Top detective</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How it Works -->
+    <section class="section" id="how">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-tag">HOW IT WORKS</span>
+          <h2 class="section-title">Solve Cases in <span>4 Simple Steps</span></h2>
+          <p class="section-subtitle">Follow our proven detective workflow and crack every mystery like a seasoned pro.</p>
+        </div>
+        <div class="how-grid">
+          <div class="step-card glass glass-glow reveal">
+            <div class="step-icon">📁</div>
+            <h3 class="step-title">Choose a Case</h3>
+            <p class="step-desc">Browse our library of mysteries ranging from quick whodunits to deep, complex investigations. Pick your difficulty and hit the ground running.</p>
+          </div>
+          <div class="step-card glass glass-glow reveal">
+            <div class="step-icon">🔍</div>
+            <h3 class="step-title">Gather Evidence</h3>
+            <p class="step-desc">Analyze crime scenes, collect physical evidence, and uncover hidden clues that will point you toward the truth of what really happened.</p>
+          </div>
+          <div class="step-card glass glass-glow reveal">
+            <div class="step-icon">💬</div>
+            <h3 class="step-title">Question Suspects</h3>
+            <p class="step-desc">Interview persons of interest, watch for tells, and read between the lines to find the contradictions that will break the case wide open.</p>
+          </div>
+          <div class="step-card glass glass-glow reveal">
+            <div class="step-icon">⚖️</div>
+            <h3 class="step-title">Make Your Accusation</h3>
+            <p class="step-desc">Build your case in the notebook, track your progress, then name the culprit when you're ready. Score big for speed, accuracy, and evidence.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-tag">FEATURES</span>
+          <h2 class="section-title">Why <span>AI Detective</span> Stands Out</h2>
+          <p class="section-subtitle">A premium detective experience crafted with cutting-edge design and addictive gameplay.</p>
+        </div>
+        <div class="features-grid">
+          <div class="feature-card glass glass-glow reveal">
+            <div class="feature-icon purple">🧠</div>
+            <h3 class="feature-title">AI-Powered Interrogations</h3>
+            <p class="feature-desc">Smart dialogue trees that adapt based on the evidence you've collected. Catch suspects in lies with AI-generated responses.</p>
+          </div>
+          <div class="feature-card glass glass-glow reveal">
+            <div class="feature-icon pink">🎭</div>
+            <h3 class="feature-title">Rich Storytelling</h3>
+            <p class="feature-desc">Each case is a full story with unique characters, motives, and twists. Experience mysteries crafted by professional writers.</p>
+          </div>
+          <div class="feature-card glass glass-glow reveal">
+            <div class="feature-icon cyan">⏱️</div>
+            <h3 class="feature-title">Beat the Clock</h3>
+            <p class="feature-desc">Race against an in-game timer to maximize your score. The faster you solve, the higher you climb the leaderboards.</p>
+          </div>
+          <div class="feature-card glass glass-glow reveal">
+            <div class="feature-icon green">📓</div>
+            <h3 class="feature-title">Detective Notebook</h3>
+            <p class="feature-desc">Every clue, witness statement, and piece of evidence is automatically recorded in your personal case notebook.</p>
+          </div>
+          <div class="feature-card glass glass-glow reveal">
+            <div class="feature-icon amber">🏆</div>
+            <h3 class="feature-title">Global Leaderboards</h3>
+            <p class="feature-desc">Compete with detectives worldwide. Earn exclusive badges and prove you have what it takes to be the best.</p>
+          </div>
+          <div class="feature-card glass glass-glow reveal">
+            <div class="feature-icon red">🎨</div>
+            <h3 class="feature-title">Stunning UI</h3>
+            <p class="feature-desc">Glassmorphism design, smooth animations, glowing gradients, and dark/light mode. A feast for the eyes.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Latest Cases -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-tag">LATEST CASES</span>
+          <h2 class="section-title">Fresh Mysteries <span>Waiting to Be Solved</span></h2>
+          <p class="section-subtitle">New investigations drop every week. Start with these featured cases and climb the ranks.</p>
+        </div>
+        <div class="cases-grid" data-cases-grid>
+          <!-- Cases rendered by JS -->
+        </div>
+        <div class="text-center mt-8 reveal">
+          <a href="cases.html" class="btn btn-primary btn-lg">📁 View All Cases</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-tag">TESTIMONIALS</span>
+          <h2 class="section-title">What Our <span>Detectives Say</span></h2>
+          <p class="section-subtitle">Join thousands of mystery lovers who can't get enough of AI Detective.</p>
+        </div>
+        <div class="testimonials-grid">
+          <div class="testimonial-card glass glass-glow reveal">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-quote">"The Cyber Espionage case had me on the edge of my seat for 30 minutes straight. When I finally connected the dots and correctly accused Dr. Patel, I literally cheered. Best detective game I've ever played."</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">MS</div>
+              <div>
+                <div class="testimonial-name">Marcus Sterling</div>
+                <div class="testimonial-role">Crime Fiction Enthusiast</div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card glass glass-glow reveal">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-quote">"The level of polish is incredible. Glassmorphism UI, smooth animations, dark mode — it looks like a premium AAA title. And the writing is genuinely clever; the suspects actually feel like real people."</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">EL</div>
+              <div>
+                <div class="testimonial-name">Elena Lin</div>
+                <div class="testimonial-role">UX Designer</div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card glass glass-glow reveal">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-quote">"I play one case every night before bed. The difficulty progression is perfect — the easy ones teach you the mechanics, and the hard ones genuinely challenge your deductive reasoning."</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">JK</div>
+              <div>
+                <div class="testimonial-name">James Kowalski</div>
+                <div class="testimonial-role">Law Student</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-tag">FAQ</span>
+          <h2 class="section-title">Frequently Asked <span>Questions</span></h2>
+          <p class="section-subtitle">Everything you need to know before starting your detective career.</p>
+        </div>
+        <div class="faq-container">
+          <div class="faq-item reveal">
+            <button class="faq-question">
+              <span>Is AI Detective free to play?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Yes! AI Detective is 100% free to play with no paywalls, no microtransactions, and no ads. Every case, feature, and leaderboard is unlocked from the moment you arrive. We believe great detective stories should be accessible to everyone.</p>
+            </div>
+          </div>
+          <div class="faq-item reveal">
+            <button class="faq-question">
+              <span>Do I need to install anything?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Absolutely not. AI Detective is a pure web-based experience that runs directly in your browser. No downloads, no plugins, no installations required. It works on desktop, tablet, and mobile — just open the site and start investigating.</p>
+            </div>
+          </div>
+          <div class="faq-item reveal">
+            <button class="faq-question">
+              <span>How are cases written?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Each mystery is crafted by experienced writers who specialize in the whodunit genre. Cases are then QA-playtested by dozens of beta detectives to ensure the clues are fair, the logic is airtight, and there are no plot holes. Every suspect needs a believable motive and opportunity.</p>
+            </div>
+          </div>
+          <div class="faq-item reveal">
+            <button class="faq-question">
+              <span>Can I save my progress?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Yes! Your solved cases, scores, and preferences are automatically saved to your browser's localStorage. This means you can close the tab and come back later without losing anything. Pro tip: Export your scores periodically if you switch browsers often.</p>
+            </div>
+          </div>
+          <div class="faq-item reveal">
+            <button class="faq-question">
+              <span>What makes a case "Hard" difficulty?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Hard cases feature more suspects (4-6 instead of 2-3), more pieces of evidence to analyze, more questions per suspect, and deliberately ambiguous clues that point to multiple suspects at first. The culprit is designed to be the last person you'd expect — but with all the evidence pointing to them if you look carefully enough.</p>
+            </div>
+          </div>
+          <div class="faq-item reveal">
+            <button class="faq-question">
+              <span>How is my score calculated?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Every case starts with a base score of 1000 points. You earn bonus points for each clue you collect (up to 500 total) and lose points for every minute that ticks off the timer (capped at 500). The minimum score for a correct accusation is 100 points. Wrong accusations award zero — so be sure before you name the culprit!</p>
+            </div>
+          </div>
+          <div class="faq-item reveal">
+            <button class="faq-question">
+              <span>Will new cases be added?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>New cases drop every week! Our writing team is constantly working on fresh mysteries across all difficulty levels. Follow us on social media or check back every Monday to see what's new in the case files.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <span class="footer-logo-icon">🔍</span>
+            <span class="footer-logo-text">AI Detective</span>
+          </div>
+          <p class="footer-desc">Premium detective mystery experience powered by artificial intelligence. Solve cases, catch culprits, and climb the leaderboard — all in your browser.</p>
+          <div class="footer-socials">
+            <a href="#" class="social-link" data-hover>🐦</a>
+            <a href="#" class="social-link" data-hover>📘</a>
+            <a href="#" class="social-link" data-hover>📸</a>
+            <a href="#" class="social-link" data-hover>💬</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Explore</h4>
+          <ul>
+            <li><a href="index.html">→ Home</a></li>
+            <li><a href="cases.html">→ All Cases</a></li>
+            <li><a href="game.html">→ Play Game</a></li>
+            <li><a href="leaderboard.html">→ Leaderboard</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="about.html">→ About Us</a></li>
+            <li><a href="contact.html">→ Contact</a></li>
+            <li><a href="about.html#future">→ Future Roadmap</a></li>
+            <li><a href="about.html#tech">→ Technology</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="#">→ Privacy Policy</a></li>
+            <li><a href="#">→ Terms of Service</a></li>
+            <li><a href="#">→ Cookie Policy</a></li>
+            <li><a href="contact.html">→ Report Bug</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-bottom-text">© 2026 AI Detective. All rights reserved.</div>
+        <div class="footer-bottom-text">Made with ❤️ for mystery lovers everywhere</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top -->
+  <button class="back-to-top" aria-label="Back to top">↑</button>
+
+  <!-- General Modals -->
+  <div class="modal-overlay" data-modal="response">
+    <div class="modal glass response-modal">
+      <div class="response-suspect">
+        <div class="response-avatar">👤</div>
+        <div>
+          <div class="response-name">Suspect Name</div>
+        </div>
+      </div>
+      <div class="response-question">Question text here</div>
+      <div class="response-answer">Answer text here</div>
+      <div class="modal-actions">
+        <button class="btn btn-primary" data-modal-close>Continue Investigation</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

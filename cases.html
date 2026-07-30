@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Browse all detective cases - from quick whodunits to complex investigations. Choose your difficulty and start solving.">
+  <title>Cases - AI Detective</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="no-scroll">
+
+  <!-- Loading Screen -->
+  <div class="loader">
+    <div class="loader-spinner"></div>
+    <div class="loader-text">Loading Case Files...</div>
+  </div>
+
+  <!-- Particle Background -->
+  <div class="particles"></div>
+
+  <!-- Custom Cursor -->
+  <div class="cursor"></div>
+  <div class="cursor-follower"></div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <span class="nav-logo-icon">🔍</span>
+        <span class="nav-logo-text">AI Detective</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="cases.html">Cases</a></li>
+        <li><a href="game.html">Game</a></li>
+        <li><a href="leaderboard.html">Leaderboard</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme">
+          <span data-theme-icon>☀️</span>
+        </button>
+        <a href="game.html" class="nav-cta">🎮 Play Now</a>
+        <button class="nav-toggle" aria-label="Menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-overlay"></div>
+  <div class="mobile-menu">
+    <ul>
+      <li><a href="index.html">🏠 Home</a></li>
+      <li><a href="cases.html">📁 Cases</a></li>
+      <li><a href="game.html">🎮 Game</a></li>
+      <li><a href="leaderboard.html">🏆 Leaderboard</a></li>
+      <li><a href="about.html">ℹ️ About</a></li>
+      <li><a href="contact.html">✉️ Contact</a></li>
+    </ul>
+  </div>
+
+  <!-- Main -->
+  <main>
+
+    <!-- Page Header -->
+    <section class="page-header">
+      <div class="container">
+        <div class="breadcrumb reveal">
+          <a href="index.html">Home</a>
+          <span class="breadcrumb-sep">/</span>
+          <span>Cases</span>
+        </div>
+        <h1 class="page-title reveal">Browse the <span>Case Files</span></h1>
+        <p class="page-subtitle reveal">Six unique mysteries await. Filter by difficulty, read the brief, and begin your investigation when ready.</p>
+      </div>
+    </section>
+
+    <!-- Filters -->
+    <section class="section" style="padding-top: 20px;">
+      <div class="container">
+        <div class="cases-filters reveal">
+          <button class="filter-btn active" data-filter="all">🗂️ All Cases</button>
+          <button class="filter-btn" data-filter="easy">🟢 Easy</button>
+          <button class="filter-btn" data-filter="medium">🟡 Medium</button>
+          <button class="filter-btn" data-filter="hard">🔴 Hard</button>
+        </div>
+
+        <!-- Cases Grid -->
+        <div class="cases-grid" data-cases-grid>
+          <!-- Cases rendered by JS -->
+        </div>
+
+        <!-- Stats -->
+        <div class="text-center mt-8 reveal">
+          <div class="hero-stats" style="max-width: 700px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
+            <div class="hero-stat">
+              <div class="hero-stat-number" data-counter="6" data-suffix="">0</div>
+              <div class="hero-stat-label">Available Cases</div>
+            </div>
+            <div class="hero-stat">
+              <div class="hero-stat-number" data-counter="2" data-suffix="">0</div>
+              <div class="hero-stat-label">Easy Cases</div>
+            </div>
+            <div class="hero-stat">
+              <div class="hero-stat-number" data-counter="2" data-suffix="">0</div>
+              <div class="hero-stat-label">Hard Cases</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <span class="footer-logo-icon">🔍</span>
+            <span class="footer-logo-text">AI Detective</span>
+          </div>
+          <p class="footer-desc">Premium detective mystery experience powered by artificial intelligence. Solve cases, catch culprits, and climb the leaderboard — all in your browser.</p>
+          <div class="footer-socials">
+            <a href="#" class="social-link" data-hover>🐦</a>
+            <a href="#" class="social-link" data-hover>📘</a>
+            <a href="#" class="social-link" data-hover>📸</a>
+            <a href="#" class="social-link" data-hover>💬</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Explore</h4>
+          <ul>
+            <li><a href="index.html">→ Home</a></li>
+            <li><a href="cases.html">→ All Cases</a></li>
+            <li><a href="game.html">→ Play Game</a></li>
+            <li><a href="leaderboard.html">→ Leaderboard</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="about.html">→ About Us</a></li>
+            <li><a href="contact.html">→ Contact</a></li>
+            <li><a href="about.html#future">→ Future Roadmap</a></li>
+            <li><a href="about.html#tech">→ Technology</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="#">→ Privacy Policy</a></li>
+            <li><a href="#">→ Terms of Service</a></li>
+            <li><a href="#">→ Cookie Policy</a></li>
+            <li><a href="contact.html">→ Report Bug</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-bottom-text">© 2026 AI Detective. All rights reserved.</div>
+        <div class="footer-bottom-text">Made with ❤️ for mystery lovers everywhere</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top -->
+  <button class="back-to-top" aria-label="Back to top">↑</button>
+
+  <!-- Response Modal -->
+  <div class="modal-overlay" data-modal="response">
+    <div class="modal glass response-modal">
+      <div class="response-suspect">
+        <div class="response-avatar">👤</div>
+        <div>
+          <div class="response-name">Suspect Name</div>
+        </div>
+      </div>
+      <div class="response-question">Question text here</div>
+      <div class="response-answer">Answer text here</div>
+      <div class="modal-actions">
+        <button class="btn btn-primary" data-modal-close>Continue Investigation</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

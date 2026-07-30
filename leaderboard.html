@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Global leaderboard for AI Detective. See the top detectives, their scores, and exclusive badges.">
+  <title>Leaderboard - AI Detective</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="no-scroll">
+
+  <!-- Loading Screen -->
+  <div class="loader">
+    <div class="loader-spinner"></div>
+    <div class="loader-text">Loading Leaderboard...</div>
+  </div>
+
+  <!-- Particle Background -->
+  <div class="particles"></div>
+
+  <!-- Custom Cursor -->
+  <div class="cursor"></div>
+  <div class="cursor-follower"></div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <span class="nav-logo-icon">🔍</span>
+        <span class="nav-logo-text">AI Detective</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="cases.html">Cases</a></li>
+        <li><a href="game.html">Game</a></li>
+        <li><a href="leaderboard.html">Leaderboard</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme">
+          <span data-theme-icon>☀️</span>
+        </button>
+        <a href="cases.html" class="nav-cta">🎮 Play Now</a>
+        <button class="nav-toggle" aria-label="Menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-overlay"></div>
+  <div class="mobile-menu">
+    <ul>
+      <li><a href="index.html">🏠 Home</a></li>
+      <li><a href="cases.html">📁 Cases</a></li>
+      <li><a href="game.html">🎮 Game</a></li>
+      <li><a href="leaderboard.html">🏆 Leaderboard</a></li>
+      <li><a href="about.html">ℹ️ About</a></li>
+      <li><a href="contact.html">✉️ Contact</a></li>
+    </ul>
+  </div>
+
+  <!-- Main -->
+  <main>
+
+    <!-- Page Header -->
+    <section class="page-header">
+      <div class="container">
+        <div class="breadcrumb reveal">
+          <a href="index.html">Home</a>
+          <span class="breadcrumb-sep">/</span>
+          <span>Leaderboard</span>
+        </div>
+        <h1 class="page-title reveal">🏆 Global <span>Leaderboard</span></h1>
+        <p class="page-subtitle reveal">Meet the world's best detectives. Solve cases, earn badges, and climb the ranks yourself.</p>
+      </div>
+    </section>
+
+    <!-- Stats Summary -->
+    <section class="section" style="padding-top: 0; padding-bottom: 60px;">
+      <div class="container">
+        <div class="hero-stats reveal" style="max-width: 800px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;">
+          <div class="hero-stat text-center">
+            <div class="hero-stat-number" data-counter="12" data-suffix="">0</div>
+            <div class="hero-stat-label">Top Detectives</div>
+          </div>
+          <div class="hero-stat text-center">
+            <div class="hero-stat-number" data-counter="1643" data-suffix="">0</div>
+            <div class="hero-stat-label">Total Cases Solved</div>
+          </div>
+          <div class="hero-stat text-center">
+            <div class="hero-stat-number" data-counter="1845200" data-suffix="">0</div>
+            <div class="hero-stat-label">Total Points</div>
+          </div>
+          <div class="hero-stat text-center">
+            <div class="hero-stat-number" data-counter="50000" data-suffix="+">0</div>
+            <div class="hero-stat-label">Active Players</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Leaderboard Table -->
+    <section class="section" style="padding-top: 0;">
+      <div class="container">
+        <div class="leaderboard-wrapper reveal">
+          <div class="leaderboard-table-wrap glass">
+            <table class="leaderboard-table">
+              <thead>
+                <tr>
+                  <th>🏅 Rank</th>
+                  <th>👤 Player</th>
+                  <th>📁 Cases Solved</th>
+                  <th>⭐ Score</th>
+                  <th>🎖️ Badges</th>
+                </tr>
+              </thead>
+              <tbody data-leaderboard-body>
+                <!-- Populated by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Badge Legend -->
+        <div class="section-header" style="margin-top: 80px;">
+          <span class="section-tag">BADGES</span>
+          <h2 class="section-title" style="font-size: clamp(24px, 4vw, 36px);">Earn Exclusive <span>Badges</span></h2>
+        </div>
+        <div class="features-grid reveal">
+          <div class="feature-card glass">
+            <div class="feature-icon purple">🏆</div>
+            <h3 class="feature-title">🥇 Champion</h3>
+            <p class="feature-desc">Awarded to detectives who reach the #1 position on the global leaderboard for 7 consecutive days.</p>
+            <div class="mt-4"><span class="badge badge-gold">🥇 Champion</span></div>
+          </div>
+          <div class="feature-card glass">
+            <div class="feature-icon purple">🧠</div>
+            <h3 class="feature-title">🧠 Master Detective</h3>
+            <p class="feature-desc">Complete 100 cases with a 90%+ accuracy rate. A rare badge only for elite investigators.</p>
+            <div class="mt-4"><span class="badge badge-master">🧠 Master</span></div>
+          </div>
+          <div class="feature-card glass">
+            <div class="feature-icon green">⚡</div>
+            <h3 class="feature-title">⚡ Speed Demon</h3>
+            <p class="feature-desc">Solve any case in under 5 minutes without compromising your score or skipping evidence.</p>
+            <div class="mt-4"><span class="badge badge-speed">⚡ Speed</span></div>
+          </div>
+          <div class="feature-card glass">
+            <div class="feature-icon pink">🎯</div>
+            <h3 class="feature-title">🎯 Sharp Eye</h3>
+            <p class="feature-desc">Collect 100% of all clues in a case before making your accusation. Leave no stone unturned.</p>
+            <div class="mt-4"><span class="badge badge-sharp">🎯 Sharp Eye</span></div>
+          </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="text-center mt-8 reveal">
+          <p class="section-subtitle mb-4">Ready to see your name up here? Start solving cases and earn your place among the greats.</p>
+          <a href="cases.html" class="btn btn-primary btn-lg">🚀 Start Your First Case</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <span class="footer-logo-icon">🔍</span>
+            <span class="footer-logo-text">AI Detective</span>
+          </div>
+          <p class="footer-desc">Premium detective mystery experience powered by artificial intelligence.</p>
+          <div class="footer-socials">
+            <a href="#" class="social-link" data-hover>🐦</a>
+            <a href="#" class="social-link" data-hover>📘</a>
+            <a href="#" class="social-link" data-hover>📸</a>
+            <a href="#" class="social-link" data-hover>💬</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Explore</h4>
+          <ul>
+            <li><a href="index.html">→ Home</a></li>
+            <li><a href="cases.html">→ All Cases</a></li>
+            <li><a href="game.html">→ Play Game</a></li>
+            <li><a href="leaderboard.html">→ Leaderboard</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="about.html">→ About Us</a></li>
+            <li><a href="contact.html">→ Contact</a></li>
+            <li><a href="about.html#future">→ Future Roadmap</a></li>
+            <li><a href="about.html#tech">→ Technology</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="#">→ Privacy Policy</a></li>
+            <li><a href="#">→ Terms of Service</a></li>
+            <li><a href="#">→ Cookie Policy</a></li>
+            <li><a href="contact.html">→ Report Bug</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-bottom-text">© 2026 AI Detective. All rights reserved.</div>
+        <div class="footer-bottom-text">Made with ❤️ for mystery lovers everywhere</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top -->
+  <button class="back-to-top" aria-label="Back to top">↑</button>
+
+  <!-- Response Modal -->
+  <div class="modal-overlay" data-modal="response">
+    <div class="modal glass response-modal">
+      <div class="response-suspect">
+        <div class="response-avatar">👤</div>
+        <div>
+          <div class="response-name">Suspect Name</div>
+        </div>
+      </div>
+      <div class="response-question">Question text here</div>
+      <div class="response-answer">Answer text here</div>
+      <div class="modal-actions">
+        <button class="btn btn-primary" data-modal-close>Continue Investigation</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
