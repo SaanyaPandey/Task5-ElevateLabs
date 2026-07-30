@@ -43,6 +43,7 @@
         <li><a href="cases.html">Cases</a></li>
         <li><a href="game.html">Game</a></li>
         <li><a href="leaderboard.html">Leaderboard</a></li>
+        <li><a href="#profile">Profile</a></li>
         <li><a href="achievements.html">Achievements</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="contact.html">Contact</a></li>
@@ -70,9 +71,10 @@
       <li><a href="cases.html">📁 Cases</a></li>
       <li><a href="game.html">🎮 Game</a></li>
       <li><a href="leaderboard.html">🏆 Leaderboard</a></li>
+      <li><a href="#profile">🕵️ Profile</a></li>
+      <li><a href="achievements.html">🏅 Achievements</a></li>
       <li><a href="about.html">ℹ️ About</a></li>
       <li><a href="contact.html">✉️ Contact</a></li>
-      <li><a href="achievements.html">🏅 Achievements</a></li>
       <li><a href="#" data-settings-toggle>⚙️ Settings</a></li>
     </ul>
   </div>
@@ -223,6 +225,52 @@
       </div>
     </section>
 
+    <!-- Daily Challenge Section -->
+    <section class="section" id="daily">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-tag">📅 DAILY</span>
+          <h2 class="section-title">Today's <span>Challenge</span></h2>
+          <p class="section-subtitle">A fresh mystery lands every 24 hours with bonus XP. Finish it before midnight to lock in the reward!</p>
+        </div>
+        <div data-daily-challenge class="reveal"></div>
+      </div>
+    </section>
+
+    <!-- Statistics Dashboard Section -->
+    <section class="section" id="stats">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="section-tag">📊 DASHBOARD</span>
+          <h2 class="section-title">Detective <span>Statistics</span></h2>
+          <p class="section-subtitle">Track your performance across every case. Counters animate as soon as they scroll into view.</p>
+        </div>
+        <div data-stats-dashboard class="reveal"></div>
+      </div>
+    </section>
+
+    <!-- Detective Profile & Timeline Preview Section -->
+    <section class="section" id="profile">
+      <div class="container" style="display:grid; grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.15fr); gap: 28px; align-items:start;">
+        <div class="reveal">
+          <div class="section-header" style="text-align:left; margin-bottom:14px;">
+            <span class="section-tag">🕵️ PROFILE</span>
+            <h2 class="section-title" style="margin-bottom:6px;">Your Detective <span>Card</span></h2>
+            <p class="section-subtitle" style="margin-bottom:0;">Click the pencil to rename your sleuth. XP &amp; accuracy update automatically after every case.</p>
+          </div>
+          <div data-profile-card></div>
+        </div>
+        <div class="reveal">
+          <div class="section-header" style="text-align:left; margin-bottom:14px;">
+            <span class="section-tag">📜 TIMELINE</span>
+            <h2 class="section-title" style="margin-bottom:6px;">Evidence Timeline <span>Preview</span></h2>
+            <p class="section-subtitle" style="margin-bottom:0;">Every case builds a visual chronological record. Watch each event animate in.</p>
+          </div>
+          <div data-timeline></div>
+        </div>
+      </div>
+    </section>
+
     <!-- Testimonials -->
     <section class="section">
       <div class="container">
@@ -345,50 +393,60 @@
       </div>
     </section>
 
-    <section class="section" id="daily">
-      <div class="container">
-        <div class="section-head reveal">
-          <span class="section-tag">📅 DAILY</span>
-          <h2 class="section-title">Today's Challenge</h2>
-          <p class="section-desc">A fresh mystery lands every 24 hours with bonus XP. Finish it before midnight to lock in the reward!</p>
-        </div>
-        <div data-daily-challenge class="reveal"></div>
-      </div>
-    </section>
-
-    <section class="section" id="stats">
-      <div class="container">
-        <div class="section-head reveal">
-          <span class="section-tag">📊 DASHBOARD</span>
-          <h2 class="section-title">Detective Statistics</h2>
-          <p class="section-desc">Track your performance across every case. Counters animate as soon as they scroll into view.</p>
-        </div>
-        <div data-stats-dashboard class="reveal"></div>
-      </div>
-    </section>
-
-    <section class="section" id="profile">
-      <div class="container" style="display:grid; grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.15fr); gap: 28px; align-items:start;">
-        <div class="reveal">
-          <div class="section-head" style="text-align:left; margin-bottom:14px;">
-            <span class="section-tag">🕵️ PROFILE</span>
-            <h2 class="section-title" style="margin-bottom:6px;">Your Detective Card</h2>
-            <p class="section-desc">Click the pencil to rename your sleuth. XP &amp; accuracy update automatically after every case.</p>
-          </div>
-          <div data-profile-card></div>
-        </div>
-        <div class="reveal">
-          <div class="section-head" style="text-align:left; margin-bottom:14px;">
-            <span class="section-tag">📜 TIMELINE</span>
-            <h2 class="section-title" style="margin-bottom:6px;">Evidence Timeline Preview</h2>
-            <p class="section-desc">Every case builds a visual chronological record. Scroll down to watch each event animate in.</p>
-          </div>
-          <div data-timeline></div>
-        </div>
-      </div>
-    </section>
-
   </main>
+
+  <!-- Settings Panel Overlay & Panel -->
+  <div data-settings-overlay class="settings-overlay"></div>
+  <aside class="settings-panel glass glass-glow" data-settings-panel>
+    <div class="settings-header">
+      <h3 class="settings-title">⚙️ Settings</h3>
+      <button data-settings-close aria-label="close" style="background:transparent;border:none;color:inherit;font-size:22px;cursor:pointer;">✕</button>
+    </div>
+    <div class="settings-body">
+      <div class="settings-row">
+        <div class="settings-info">
+          <span class="settings-icon">🔊</span>
+          <span>
+            <div class="settings-label">Enable Sound</div>
+            <small class="settings-hint">Plays subtle beeps on clicks &amp; events</small>
+          </span>
+        </div>
+        <label class="switch">
+          <input type="checkbox" data-pref="sound">
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div class="settings-row">
+        <div class="settings-info">
+          <span class="settings-icon">✨</span>
+          <span>
+            <div class="settings-label">Enable Animations</div>
+            <small class="settings-hint">Fades, reveals &amp; hover effects</small>
+          </span>
+        </div>
+        <label class="switch">
+          <input type="checkbox" data-pref="animations" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div class="settings-row">
+        <div class="settings-info">
+          <span class="settings-icon">🎨</span>
+          <span>
+            <div class="settings-label">Dark Theme</div>
+            <small class="settings-hint">Switch between dark &amp; light mode</small>
+          </span>
+        </div>
+        <label class="switch">
+          <input type="checkbox" data-pref="theme" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+    </div>
+    <div class="settings-footer">
+      <small>Build <span data-app-version>v2.0.0</span></small>
+    </div>
+  </aside>
 
   <!-- Footer -->
   <footer class="footer">
@@ -399,45 +457,57 @@
             <span class="footer-logo-icon">🔍</span>
             <span class="footer-logo-text">AI Detective</span>
           </div>
+          <span class="footer-brand-version mono" data-app-version>v2.0.0</span>
           <p class="footer-desc">Premium detective mystery experience powered by artificial intelligence. Solve cases, catch culprits, and climb the leaderboard — all in your browser.</p>
           <div class="footer-socials">
             <a href="#" class="social-link" data-hover>🐦</a>
             <a href="#" class="social-link" data-hover>📘</a>
             <a href="#" class="social-link" data-hover>📸</a>
             <a href="#" class="social-link" data-hover>💬</a>
+            <a href="#" class="social-link" data-hover>🐙</a>
           </div>
         </div>
         <div class="footer-col">
-          <h4>Explore</h4>
+          <h4>Quick Links</h4>
           <ul>
             <li><a href="index.html">→ Home</a></li>
             <li><a href="cases.html">→ All Cases</a></li>
             <li><a href="game.html">→ Play Game</a></li>
             <li><a href="leaderboard.html">→ Leaderboard</a></li>
+            <li><a href="#profile">→ Profile</a></li>
+            <li><a href="achievements.html">→ Achievements</a></li>
+            <li><a href="contact.html">→ Contact</a></li>
           </ul>
         </div>
         <div class="footer-col">
           <h4>Company</h4>
           <ul>
             <li><a href="about.html">→ About Us</a></li>
-            <li><a href="contact.html">→ Contact</a></li>
-            <li><a href="about.html#future">→ Future Roadmap</a></li>
+            <li><a href="about.html#future">→ Roadmap</a></li>
             <li><a href="about.html#tech">→ Technology</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Legal</h4>
-          <ul>
-            <li><a href="#">→ Privacy Policy</a></li>
-            <li><a href="#">→ Terms of Service</a></li>
-            <li><a href="#">→ Cookie Policy</a></li>
             <li><a href="contact.html">→ Report Bug</a></li>
           </ul>
         </div>
+        <div class="footer-col">
+          <h4>Follow Us</h4>
+          <ul>
+            <li><a href="#">→ Twitter / X</a></li>
+            <li><a href="#">→ Facebook</a></li>
+            <li><a href="#">→ Instagram</a></li>
+            <li><a href="#">→ Discord</a></li>
+            <li><a href="#">→ GitHub</a></li>
+          </ul>
+        </div>
       </div>
-      <div class="footer-bottom">
+      <div class="footer-bottom footer-bottom-row">
         <div class="footer-bottom-text">© 2026 AI Detective. All rights reserved.</div>
-        <div class="footer-bottom-text">Made with ❤️ for mystery lovers everywhere</div>
+        <div class="footer-socials bottom">
+          <a href="#" class="social-link" data-hover>🐦</a>
+          <a href="#" class="social-link" data-hover>📘</a>
+          <a href="#" class="social-link" data-hover>📸</a>
+          <a href="#" class="social-link" data-hover>💬</a>
+          <a href="#" class="social-link" data-hover>🐙</a>
+        </div>
       </div>
     </div>
   </footer>
@@ -458,6 +528,20 @@
       <div class="response-answer">Answer text here</div>
       <div class="modal-actions">
         <button class="btn btn-primary" data-modal-close>Continue Investigation</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" data-modal="name-edit">
+    <div class="modal glass">
+      <div class="modal-title" style="font-size:22px; font-weight:800; margin-bottom:6px;">✏️ Edit Detective Name</div>
+      <div class="modal-message" style="margin-bottom:16px;">Personalize your sleuth identity.</div>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <input class="name-edit-input" data-name-input maxlength="24" placeholder="Enter name">
+      </div>
+      <div class="modal-actions" style="margin-top:18px;">
+        <button class="btn btn-secondary" data-modal-close>Cancel</button>
+        <button class="btn btn-primary" data-name-save>Save Name</button>
       </div>
     </div>
   </div>

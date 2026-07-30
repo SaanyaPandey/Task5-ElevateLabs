@@ -9,6 +9,7 @@
 </head>
 <body class="no-scroll">
 
+  <!-- Fingerprint Loading Screen -->
   <div class="fp-loader">
     <div class="fp-wrap">
       <div class="fp-icon">🔍
@@ -27,6 +28,7 @@
   <div class="cursor"></div>
   <div class="cursor-follower"></div>
 
+  <!-- Navbar -->
   <nav class="navbar">
     <div class="nav-container">
       <a href="index.html" class="nav-logo">
@@ -38,7 +40,8 @@
         <li><a href="cases.html">Cases</a></li>
         <li><a href="game.html">Game</a></li>
         <li><a href="leaderboard.html">Leaderboard</a></li>
-        <li><a href="achievements.html" class="active">🏅 Achievements</a></li>
+        <li><a href="index.html#profile">Profile</a></li>
+        <li><a href="achievements.html" class="active">Achievements</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
@@ -57,6 +60,7 @@
     </div>
   </nav>
 
+  <!-- Mobile Menu -->
   <div class="mobile-overlay"></div>
   <div class="mobile-menu">
     <ul>
@@ -64,15 +68,17 @@
       <li><a href="cases.html">📁 Cases</a></li>
       <li><a href="game.html">🎮 Game</a></li>
       <li><a href="leaderboard.html">🏆 Leaderboard</a></li>
+      <li><a href="index.html#profile">🕵️ Profile</a></li>
+      <li><a href="achievements.html">🏅 Achievements</a></li>
       <li><a href="about.html">ℹ️ About</a></li>
       <li><a href="contact.html">✉️ Contact</a></li>
-      <li><a href="achievements.html">🏅 Achievements</a></li>
       <li><a href="#" data-settings-toggle>⚙️ Settings</a></li>
     </ul>
   </div>
 
   <main>
 
+    <!-- Page Header -->
     <section class="hero">
       <div class="container">
         <h1 style="font-size:clamp(32px,5vw,56px); margin-bottom:12px;">🏅 Achievements</h1>
@@ -80,38 +86,145 @@
       </div>
     </section>
 
+    <!-- Profile Section -->
     <section class="section" style="padding: 40px 0 10px;">
       <div class="container">
         <div data-profile-card></div>
       </div>
     </section>
 
+    <!-- Achievements Summary Section -->
     <section class="section" style="padding: 20px 0;">
       <div class="container">
         <div data-achievements-summary></div>
       </div>
     </section>
 
+    <!-- Achievements Grid Section (6 Achievement Cards) -->
     <section class="section">
       <div class="container">
-        <div class="ach-grid" data-achievements-grid></div>
+        <div class="ach-grid" data-achievements-grid>
+          <!-- Card 1: First Investigation -->
+          <div class="ach-card glass locked">
+            <div class="ach-top">
+              <div class="ach-icon">🔍</div>
+              <div class="ach-title-wrap">
+                <span class="ach-status locked">LOCKED</span>
+                <div class="ach-name">First Investigation</div>
+              </div>
+            </div>
+            <p class="ach-desc">Complete your first case.</p>
+            <div class="ach-progress">
+              <div class="ach-progress-row"><span>Progress</span><span>0 / 1</span></div>
+              <div class="ach-progress-bar"><div class="ach-progress-fill" style="width:0%"></div></div>
+            </div>
+            <span class="ach-reward">✨ Reward: +100 XP</span>
+          </div>
+
+          <!-- Card 2: Evidence Collector -->
+          <div class="ach-card glass locked">
+            <div class="ach-top">
+              <div class="ach-icon">🧰</div>
+              <div class="ach-title-wrap">
+                <span class="ach-status locked">LOCKED</span>
+                <div class="ach-name">Evidence Collector</div>
+              </div>
+            </div>
+            <p class="ach-desc">Collect 20 pieces of evidence across all cases.</p>
+            <div class="ach-progress">
+              <div class="ach-progress-row"><span>Progress</span><span>0 / 20</span></div>
+              <div class="ach-progress-bar"><div class="ach-progress-fill" style="width:0%"></div></div>
+            </div>
+            <span class="ach-reward">✨ Reward: +150 XP</span>
+          </div>
+
+          <!-- Card 3: Master Detective -->
+          <div class="ach-card glass locked">
+            <div class="ach-top">
+              <div class="ach-icon">🏆</div>
+              <div class="ach-title-wrap">
+                <span class="ach-status locked">LOCKED</span>
+                <div class="ach-name">Master Detective</div>
+              </div>
+            </div>
+            <p class="ach-desc">Solve 10 cases with a minimum 80% accuracy.</p>
+            <div class="ach-progress">
+              <div class="ach-progress-row"><span>Progress</span><span>0 / 10</span></div>
+              <div class="ach-progress-bar"><div class="ach-progress-fill" style="width:0%"></div></div>
+            </div>
+            <span class="ach-reward">✨ Reward: +500 XP</span>
+          </div>
+
+          <!-- Card 4: Speed Solver -->
+          <div class="ach-card glass locked">
+            <div class="ach-top">
+              <div class="ach-icon">⚡</div>
+              <div class="ach-title-wrap">
+                <span class="ach-status locked">LOCKED</span>
+                <div class="ach-name">Speed Solver</div>
+              </div>
+            </div>
+            <p class="ach-desc">Accumulate less than 10 minutes of total solving time for 3 completed cases.</p>
+            <div class="ach-progress">
+              <div class="ach-progress-row"><span>Progress</span><span>0 / 3</span></div>
+              <div class="ach-progress-bar"><div class="ach-progress-fill" style="width:0%"></div></div>
+            </div>
+            <span class="ach-reward">✨ Reward: +250 XP</span>
+          </div>
+
+          <!-- Card 5: No Hint Used -->
+          <div class="ach-card glass locked">
+            <div class="ach-top">
+              <div class="ach-icon">🎯</div>
+              <div class="ach-title-wrap">
+                <span class="ach-status locked">LOCKED</span>
+                <div class="ach-name">No Hint Used</div>
+              </div>
+            </div>
+            <p class="ach-desc">Complete 5 cases with 100% evidence collected (every clue).</p>
+            <div class="ach-progress">
+              <div class="ach-progress-row"><span>Progress</span><span>0 / 5</span></div>
+              <div class="ach-progress-bar"><div class="ach-progress-fill" style="width:0%"></div></div>
+            </div>
+            <span class="ach-reward">✨ Reward: +300 XP</span>
+          </div>
+
+          <!-- Card 6: Perfect Investigation -->
+          <div class="ach-card glass locked">
+            <div class="ach-top">
+              <div class="ach-icon">💯</div>
+              <div class="ach-title-wrap">
+                <span class="ach-status locked">LOCKED</span>
+                <div class="ach-name">Perfect Investigation</div>
+              </div>
+            </div>
+            <p class="ach-desc">Earn a 100% accuracy rate after 4 or more cases.</p>
+            <div class="ach-progress">
+              <div class="ach-progress-row"><span>Progress</span><span>0 / 4</span></div>
+              <div class="ach-progress-bar"><div class="ach-progress-fill" style="width:0%"></div></div>
+            </div>
+            <span class="ach-reward">✨ Reward: +400 XP</span>
+          </div>
+        </div>
       </div>
     </section>
 
+    <!-- Timeline Example Section -->
     <section class="section" style="padding: 40px 0;">
       <div class="container">
         <h2 style="font-size: clamp(26px,4vw,40px); margin-bottom:10px;">📜 Evidence Timeline Example</h2>
-        <p class="hero-desc">Below is how an evidence timeline appears inside each case. Hover to see the connecting lines.<br><br></p>
+        <p class="hero-desc">Below is how an evidence timeline appears inside each case. Scroll to watch each event animate in.<br><br></p>
         <div data-timeline></div>
       </div>
     </section>
 
   </main>
 
+  <!-- Settings Panel Overlay & Panel -->
   <div data-settings-overlay class="settings-overlay"></div>
   <aside class="settings-panel glass glass-glow" data-settings-panel>
     <div class="settings-header">
-      <h3>⚙️ Settings</h3>
+      <h3 class="settings-title">⚙️ Settings</h3>
       <button data-settings-close aria-label="close" style="background:transparent;border:none;color:inherit;font-size:22px;cursor:pointer;">✕</button>
     </div>
     <div class="settings-body">
@@ -120,7 +233,7 @@
           <span class="settings-icon">🔊</span>
           <span>
             <div class="settings-label">Enable Sound</div>
-            <small class="settings-hint">Plays subtle beeps on clicks & events</small>
+            <small class="settings-hint">Plays subtle beeps on clicks &amp; events</small>
           </span>
         </div>
         <label class="switch">
@@ -133,7 +246,7 @@
           <span class="settings-icon">✨</span>
           <span>
             <div class="settings-label">Enable Animations</div>
-            <small class="settings-hint">Fades, reveals & hover effects</small>
+            <small class="settings-hint">Fades, reveals &amp; hover effects</small>
           </span>
         </div>
         <label class="switch">
@@ -146,7 +259,7 @@
           <span class="settings-icon">🎨</span>
           <span>
             <div class="settings-label">Dark Theme</div>
-            <small class="settings-hint">Switch between dark & light mode</small>
+            <small class="settings-hint">Switch between dark &amp; light mode</small>
           </span>
         </div>
         <label class="switch">
@@ -160,6 +273,7 @@
     </div>
   </aside>
 
+  <!-- Footer -->
   <footer class="footer">
     <div class="container">
       <div class="footer-grid">
@@ -175,6 +289,7 @@
             <a href="#" class="social-link" data-hover>📘</a>
             <a href="#" class="social-link" data-hover>📸</a>
             <a href="#" class="social-link" data-hover>💬</a>
+            <a href="#" class="social-link" data-hover>🐙</a>
           </div>
         </div>
         <div class="footer-col">
@@ -184,6 +299,7 @@
             <li><a href="cases.html">→ All Cases</a></li>
             <li><a href="game.html">→ Play Game</a></li>
             <li><a href="leaderboard.html">→ Leaderboard</a></li>
+            <li><a href="index.html#profile">→ Profile</a></li>
             <li><a href="achievements.html">→ Achievements</a></li>
             <li><a href="contact.html">→ Contact</a></li>
           </ul>
@@ -249,16 +365,6 @@
       <div class="modal-actions" style="margin-top:18px;">
         <button class="btn btn-secondary" data-modal-close>Cancel</button>
         <button class="btn btn-primary" data-name-save>Save Name</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal-overlay" data-modal="contact-success">
-    <div class="modal glass">
-      <div class="modal-title">Message sent!</div>
-      <div class="modal-message"></div>
-      <div class="modal-actions">
-        <button class="btn btn-primary" data-modal-close>Close</button>
       </div>
     </div>
   </div>

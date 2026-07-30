@@ -9,7 +9,16 @@
 </head>
 <body class="no-scroll">
 
-  <!-- Loading Screen -->
+  <!-- Fingerprint Loading Screen -->
+  <div class="fp-loader">
+    <div class="fp-wrap">
+      <div class="fp-icon">🔍<div class="fp-scan"></div></div>
+      <div class="fp-text">Scanning credentials...</div>
+      <div class="fp-bar"><div class="fp-bar-fill"></div></div>
+      <div class="fp-percent">0%</div>
+    </div>
+  </div>
+  <!-- Legacy fallback loader -->
   <div class="loader">
     <div class="loader-spinner"></div>
     <div class="loader-text">Preparing Investigation...</div>
@@ -34,10 +43,13 @@
         <li><a href="cases.html">Cases</a></li>
         <li><a href="game.html">Game</a></li>
         <li><a href="leaderboard.html">Leaderboard</a></li>
+        <li><a href="index.html#profile">Profile</a></li>
+        <li><a href="achievements.html">Achievements</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
       <div class="nav-actions">
+        <button class="settings-toggle" data-settings-toggle aria-label="Settings">⚙️</button>
         <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme">
           <span data-theme-icon>☀️</span>
         </button>
@@ -59,8 +71,11 @@
       <li><a href="cases.html">📁 Cases</a></li>
       <li><a href="game.html">🎮 Game</a></li>
       <li><a href="leaderboard.html">🏆 Leaderboard</a></li>
+      <li><a href="index.html#profile">🕵️ Profile</a></li>
+      <li><a href="achievements.html">🏅 Achievements</a></li>
       <li><a href="about.html">ℹ️ About</a></li>
       <li><a href="contact.html">✉️ Contact</a></li>
+      <li><a href="#" data-settings-toggle>⚙️ Settings</a></li>
     </ul>
   </div>
 
@@ -79,6 +94,12 @@
 
         <!-- Sidebar -->
         <aside class="game-sidebar">
+          <!-- Detective Profile Widget -->
+          <div class="game-profile-section glass" style="padding:20px; margin-bottom:20px;">
+            <div class="notebook-title" style="margin-bottom:12px;">🕵️ Detective Profile</div>
+            <div data-profile-card></div>
+          </div>
+
           <!-- Progress -->
           <div class="game-progress-section glass">
             <div class="game-progress-label">
@@ -170,6 +191,15 @@
             </div>
           </section>
 
+          <!-- Evidence Timeline Section -->
+          <section class="timeline-section glass reveal" style="padding:24px; margin-top:24px;">
+            <div class="section-heading">
+              <div class="section-heading-icon">📜</div>
+              <h2>Evidence Timeline</h2>
+            </div>
+            <div data-timeline></div>
+          </section>
+
           <!-- Action Bar -->
           <div class="game-actions">
             <a href="cases.html" class="btn btn-secondary btn-lg">📁 Exit Case</a>
@@ -183,6 +213,59 @@
     </div>
   </main>
 
+  <!-- Settings Panel Overlay & Panel -->
+  <div data-settings-overlay class="settings-overlay"></div>
+  <aside class="settings-panel glass glass-glow" data-settings-panel>
+    <div class="settings-header">
+      <h3 class="settings-title">⚙️ Settings</h3>
+      <button data-settings-close aria-label="close" style="background:transparent;border:none;color:inherit;font-size:22px;cursor:pointer;">✕</button>
+    </div>
+    <div class="settings-body">
+      <div class="settings-row">
+        <div class="settings-info">
+          <span class="settings-icon">🔊</span>
+          <span>
+            <div class="settings-label">Enable Sound</div>
+            <small class="settings-hint">Plays subtle beeps on clicks &amp; events</small>
+          </span>
+        </div>
+        <label class="switch">
+          <input type="checkbox" data-pref="sound">
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div class="settings-row">
+        <div class="settings-info">
+          <span class="settings-icon">✨</span>
+          <span>
+            <div class="settings-label">Enable Animations</div>
+            <small class="settings-hint">Fades, reveals &amp; hover effects</small>
+          </span>
+        </div>
+        <label class="switch">
+          <input type="checkbox" data-pref="animations" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div class="settings-row">
+        <div class="settings-info">
+          <span class="settings-icon">🎨</span>
+          <span>
+            <div class="settings-label">Dark Theme</div>
+            <small class="settings-hint">Switch between dark &amp; light mode</small>
+          </span>
+        </div>
+        <label class="switch">
+          <input type="checkbox" data-pref="theme" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+    </div>
+    <div class="settings-footer">
+      <small>Build <span data-app-version>v2.0.0</span></small>
+    </div>
+  </aside>
+
   <!-- Footer -->
   <footer class="footer">
     <div class="container">
@@ -192,21 +275,26 @@
             <span class="footer-logo-icon">🔍</span>
             <span class="footer-logo-text">AI Detective</span>
           </div>
+          <span class="footer-brand-version mono" data-app-version>v2.0.0</span>
           <p class="footer-desc">Premium detective mystery experience powered by artificial intelligence.</p>
           <div class="footer-socials">
             <a href="#" class="social-link" data-hover>🐦</a>
             <a href="#" class="social-link" data-hover>📘</a>
             <a href="#" class="social-link" data-hover>📸</a>
             <a href="#" class="social-link" data-hover>💬</a>
+            <a href="#" class="social-link" data-hover>🐙</a>
           </div>
         </div>
         <div class="footer-col">
-          <h4>Explore</h4>
+          <h4>Quick Links</h4>
           <ul>
             <li><a href="index.html">→ Home</a></li>
             <li><a href="cases.html">→ All Cases</a></li>
             <li><a href="game.html">→ Play Game</a></li>
             <li><a href="leaderboard.html">→ Leaderboard</a></li>
+            <li><a href="index.html#profile">→ Profile</a></li>
+            <li><a href="achievements.html">→ Achievements</a></li>
+            <li><a href="contact.html">→ Contact</a></li>
           </ul>
         </div>
         <div class="footer-col">
@@ -219,18 +307,25 @@
           </ul>
         </div>
         <div class="footer-col">
-          <h4>Legal</h4>
+          <h4>Follow Us</h4>
           <ul>
-            <li><a href="#">→ Privacy Policy</a></li>
-            <li><a href="#">→ Terms of Service</a></li>
-            <li><a href="#">→ Cookie Policy</a></li>
-            <li><a href="contact.html">→ Report Bug</a></li>
+            <li><a href="#">→ Twitter / X</a></li>
+            <li><a href="#">→ Facebook</a></li>
+            <li><a href="#">→ Instagram</a></li>
+            <li><a href="#">→ Discord</a></li>
+            <li><a href="#">→ GitHub</a></li>
           </ul>
         </div>
       </div>
-      <div class="footer-bottom">
+      <div class="footer-bottom footer-bottom-row">
         <div class="footer-bottom-text">© 2026 AI Detective. All rights reserved.</div>
-        <div class="footer-bottom-text">Made with ❤️ for mystery lovers everywhere</div>
+        <div class="footer-socials bottom">
+          <a href="#" class="social-link" data-hover>🐦</a>
+          <a href="#" class="social-link" data-hover>📘</a>
+          <a href="#" class="social-link" data-hover>📸</a>
+          <a href="#" class="social-link" data-hover>💬</a>
+          <a href="#" class="social-link" data-hover>🐙</a>
+        </div>
       </div>
     </div>
   </footer>
@@ -306,6 +401,20 @@
       <div class="modal-actions">
         <button class="btn btn-secondary" data-modal-close>🔍 Review Clues</button>
         <a href="game.html" class="btn btn-primary">🔄 Restart Case</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" data-modal="name-edit">
+    <div class="modal glass">
+      <div class="modal-title" style="font-size:22px; font-weight:800; margin-bottom:6px;">✏️ Edit Detective Name</div>
+      <div class="modal-message" style="margin-bottom:16px;">Personalize your sleuth identity.</div>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <input class="name-edit-input" data-name-input maxlength="24" placeholder="Enter name">
+      </div>
+      <div class="modal-actions" style="margin-top:18px;">
+        <button class="btn btn-secondary" data-modal-close>Cancel</button>
+        <button class="btn btn-primary" data-name-save>Save Name</button>
       </div>
     </div>
   </div>
